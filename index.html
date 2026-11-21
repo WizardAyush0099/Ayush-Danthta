@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js" data-motion="on" data-grain="on">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ayush Danthta — Designer, Developer &amp; Motion · WZ Studio</title>
+<meta name="description" content="Ayush Danthta (WZ Studio) designs and builds cinematic websites, product interfaces and motion systems. React, TypeScript, WebGL and GSAP — based in Shimla, working worldwide." />
+<meta name="author" content="Ayush Danthta" />
+<meta name="theme-color" content="#0B0705" />
+<link rel="canonical" href="https://wzayush.vercel.app/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Ayush Danthta — WZ Studio" />
+<meta property="og:description" content="Cinematic websites, product interfaces and motion systems. Designed and built end to end." />
+<meta property="og:url" content="https://wzayush.vercel.app/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Ayush Danthta — WZ Studio" />
+<meta name="twitter:description" content="Designer, developer and motion. Atmosphere, craft and load time." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230B0705'/%3E%3Ctext x='32' y='45' font-family='Arial,Helvetica,sans-serif' font-size='25' font-weight='700' fill='%23FAF3E9' text-anchor='middle'%3EWZ%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/main.css" />
+<script>document.documentElement.classList.remove('no-js');</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ayush Danthta",
+  "alternateName": "WZ Studio",
+  "jobTitle": "Designer & Developer",
+  "email": "mailto:ayushdanthta@gmail.com",
+  "url": "https://wzayush.vercel.app/",
+  "address": { "@type": "PostalAddress", "addressLocality": "Shimla", "addressRegion": "Himachal Pradesh", "addressCountry": "IN" },
+  "knowsAbout": ["Web Design","Front-end Development","React","TypeScript","Three.js","GSAP","WebGL","Motion Design"],
+  "sameAs": ["https://github.com/WizardAyush0099","https://www.instagram.com/a_y_u_s_h0099","https://study-hub-kappa.vercel.app/"]
+}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-mid">
+    <div class="loader-mark"><span>W</span><span>Z</span></div>
+    <div class="loader-cap">Ayush Danthta — Designer · Developer · Motion</div>
+  </div>
+  <div class="loader-foot">
+    <div class="loader-meta">Shimla, India<br />Building the room</div>
+    <div class="loader-num" id="loaderNum">0</div>
+  </div>
+  <div class="loader-line"><i id="loaderBar"></i></div>
+</div>
+
+<div class="cursor" id="cursor" aria-hidden="true">
+  <i class="cursor-ring" id="cursorRing"></i>
+  <i class="cursor-dot" id="cursorDot"></i>
+  <span class="cursor-label" id="cursorLabel"></span>
+</div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top" aria-label="Ayush Danthta — home"><i class="mark" aria-hidden="true"></i>Ayush Danthta</a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#about">Studio</a>
+    <a href="#templates">Templates</a>
+    <a href="#process">Process</a>
+  </nav>
+  <div style="display:flex;align-items:center;gap:16px">
+    <a class="nav-cta" href="#contact">Start a project</a>
+    <button class="nav-menu" type="button" id="menuOpen" aria-expanded="false" aria-controls="menu">
+      <span>Index</span><i aria-hidden="true"></i>
+    </button>
+  </div>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Site index">
+  <div class="menu-top">
+    <span class="mono">WZ — Index</span>
+    <button class="menu-close" type="button" id="menuClose">Close <i aria-hidden="true"></i></button>
+  </div>
+  <nav class="menu-list" aria-label="Site sections">
+    <a href="#top"><span>01</span>Opening</a>
+    <a href="#about"><span>02</span>Studio</a>
+    <a href="#work"><span>03</span>Work</a>
+    <a href="#case"><span>04</span>Case study</a>
+    <a href="#services"><span>05</span>Services</a>
+    <a href="#templates"><span>06</span>Templates</a>
+    <a href="#process"><span>07</span>Process</a>
+    <a href="#contact"><span>08</span>Contact</a>
+  </nav>
+  <div class="menu-foot">
+    <a href="mailto:ayushdanthta@gmail.com">ayushdanthta@gmail.com</a>
+    <a href="https://wa.me/918353011030" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    <a href="https://github.com/WizardAyush0099" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://www.instagram.com/a_y_u_s_h0099" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <a href="effects.html">Effects library</a>
+  </div>
+</div>
+
+<main id="main">
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="hero-canvas" id="heroCanvas" aria-hidden="true"></div>
+    <div class="hero-wash" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
+
+    <div class="hero-type">
+      <h1 class="sr">Ayush Danthta — designer, developer and motion, WZ Studio</h1>
+      <div aria-hidden="true">
+        <span class="word"><span class="hero-line-inner" data-hero-line="1">Ayush</span></span>
+        <span class="word word--2"><span class="hero-line-inner" data-hero-line="2">Danthta</span></span>
+        <span class="word word--3"><span class="hero-line-inner" data-hero-line="3">Designing rooms out of type, light and timing.</span></span>
+      </div>
+    </div>
+
+    <div class="portrait" id="portrait" data-magnet data-cursor-label="Portrait">
+      <img id="portraitImg" src="assets/img/portrait-cutout.webp" alt="Portrait of Ayush Danthta" width="900" height="1200" decoding="async" fetchpriority="high" />
+      <div class="portrait-fallback" id="portraitFallback" aria-hidden="true">
+        <b>WZ</b>
+        <span>Ayush Danthta</span>
+      </div>
+    </div>
+
+    <div class="hero-frame" aria-hidden="true"></div>
+    <span class="hero-rail" aria-hidden="true">Portfolio — 2026</span>
+    <span class="hero-rail right" aria-hidden="true">Designer · Developer · Motion</span>
+
+    <div class="hero-meta">
+      <div class="col">
+        <span><i class="dot" aria-hidden="true"></i>Available for select projects</span>
+        <span><b>Shimla, India</b> — working worldwide</span>
+      </div>
+      <span class="scroll-cue" aria-hidden="true">
+        <span class="bar"></span><span>Scroll</span>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v16M6 14l6 6 6-6" stroke="currentColor" stroke-width="1.6"/></svg>
+      </span>
+      <div class="col right">
+        <span>Independent studio — <b>WZ</b></span>
+        <span>React · TypeScript · WebGL</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span><b>Designer</b><i></i><b>Developer</b><i></i><b>Motion</b><i></i><b>WebGL</b><i></i><b>Interface</b><i></i><b>Shimla → Worldwide</b><i></i></span>
+      <span><b>Designer</b><i></i><b>Developer</b><i></i><b>Motion</b><i></i><b>WebGL</b><i></i><b>Interface</b><i></i><b>Shimla → Worldwide</b><i></i></span>
+    </div>
+  </div>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section section--paper about" id="about">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">02 — Studio</span>
+          <h2 class="sec-title">Atmosphere,<br /><em>engineered.</em></h2>
+        </div>
+        <p class="sec-sub">A one-person studio for the in-between work: art direction, interface and the code that makes both feel inevitable.</p>
+      </div>
+
+      <div class="about-grid">
+        <figure class="about-media" data-reveal>
+          <img src="assets/img/portrait-cutout.webp" alt="Ayush Danthta, designer and developer" loading="lazy" decoding="async" />
+          <div class="ph" aria-hidden="true">
+            <b>WZ</b>
+            <span>Ayush Danthta</span>
+          </div>
+          <div class="tint" aria-hidden="true"></div>
+          <figcaption class="cap"><span>Ayush Danthta</span><span>Shimla · IN</span></figcaption>
+        </figure>
+
+        <div class="about-copy">
+          <p class="lead" data-reveal>I build websites that feel like <em>rooms</em> — then make them load in under a second.</p>
+          <div class="body" data-reveal>
+            <p>I’m Ayush Danthta, a designer and developer working from Shimla, India. Most projects start with a feeling — a restaurant at dusk, a product that needs to feel trustworthy, a study tool that shouldn’t feel like homework — and end in a page that holds that feeling without a single ornament doing nothing.</p>
+            <p>The range is deliberate. Product surfaces like Study Hub sit next to single-purpose sites for cafés, studios and labels. Different scales, same standard: a clear point of view, motion with a reason, and performance treated as part of the design.</p>
+          </div>
+          <p class="about-sign" data-reveal><i aria-hidden="true"></i>Designer · Developer · Motion — WZ Studio</p>
+        </div>
+      </div>
+
+      <dl class="stats">
+        <div class="stat" data-reveal>
+          <dt>Live builds</dt>
+          <dd data-count="4" data-pad="2">04</dd>
+          <p>Shipped and browsable, not screenshots.</p>
+        </div>
+        <div class="stat" data-reveal>
+          <dt>Template directions</dt>
+          <dd data-count="7" data-pad="2">07</dd>
+          <p>Art directions, ready to build on.</p>
+        </div>
+        <div class="stat" data-reveal>
+          <dt>Studio base</dt>
+          <dd>IST<small>+5:30</small></dd>
+          <p>Overlaps EU mornings and US evenings.</p>
+        </div>
+        <div class="stat" data-reveal>
+          <dt>First reply</dt>
+          <dd>&lt;1<small>day</small></dd>
+          <p>Usually the same afternoon.</p>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= STACK ================= -->
+  <section class="section stack" id="stack">
+    <div class="stack-marquee" aria-hidden="true">
+      <div class="row">
+        <span>React</span><span>TypeScript</span><span>Three.js</span><span>GSAP</span><span>WebGL</span><span>CSS</span><span>Canvas</span><span>Vite</span>
+        <span>React</span><span>TypeScript</span><span>Three.js</span><span>GSAP</span><span>WebGL</span><span>CSS</span><span>Canvas</span><span>Vite</span>
+      </div>
+      <div class="row rev">
+        <span>Art direction</span><span>Interface design</span><span>Motion systems</span><span>Performance</span><span>Accessibility</span><span>Prototyping</span>
+        <span>Art direction</span><span>Interface design</span><span>Motion systems</span><span>Performance</span><span>Accessibility</span><span>Prototyping</span>
+      </div>
+    </div>
+
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">02.1 — Capabilities</span>
+          <h2 class="sec-title">Four things,<br />done <em>properly.</em></h2>
+        </div>
+        <p class="sec-sub">Not a logo wall. The work moves between these four disciplines, usually in the same week.</p>
+      </div>
+
+      <div class="expertise">
+        <article class="exp" data-reveal>
+          <span class="n">01</span>
+          <div>
+            <h3>Art direction</h3>
+            <p>One palette, one type hierarchy, one motif repeated until the page feels authored.</p>
+            <div class="chips"><span>Identity</span><span>Type</span><span>Grid</span></div>
+          </div>
+        </article>
+        <article class="exp" data-reveal>
+          <span class="n">02</span>
+          <div>
+            <h3>Front-end</h3>
+            <p>Semantic markup, real focus states, responsive type that survives 360px.</p>
+            <div class="chips"><span>React</span><span>TypeScript</span><span>CSS</span></div>
+          </div>
+        </article>
+        <article class="exp" data-reveal>
+          <span class="n">03</span>
+          <div>
+            <h3>Motion</h3>
+            <p>One entrance, one or two scroll beats, micro-interactions that confirm an action.</p>
+            <div class="chips"><span>GSAP</span><span>ScrollTrigger</span><span>Canvas</span></div>
+          </div>
+        </article>
+        <article class="exp" data-reveal>
+          <span class="n">04</span>
+          <div>
+            <h3>3D &amp; shaders</h3>
+            <p>Particles, fields and depth that earn their weight — with static fallbacks when they don’t.</p>
+            <div class="chips"><span>Three.js</span><span>GLSL</span><span>WebGL</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section class="section work" id="work">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">03 — Selected work</span>
+          <h2 class="sec-title">Four live<br /><em>surfaces.</em></h2>
+        </div>
+        <p class="sec-sub">Every card opens the real thing. This is the product work, not a mockup reel.</p>
+      </div>
+    </div>
+
+    <div class="work-track-wrap" id="workWrap">
+      <div class="work-track" id="workTrack">
+        <a class="work-card" href="https://study-hub-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" data-cursor-label="Open live site">
+          <div class="work-poster">
+            <span class="year">2026</span>
+            <span class="tag">Live product</span>
+            <span class="big">Study<br />Hub</span>
+            <div class="ui" aria-hidden="true">
+              <div class="ui-bar"><i></i><i></i><i></i></div>
+              <span class="ui-line w70"></span>
+              <span class="ui-line w45"></span>
+              <span class="ui-block"></span>
+              <span class="ui-line"></span>
+              <span class="ui-line w70"></span>
+            </div>
+          </div>
+          <div class="work-body">
+            <div>
+              <h3>Study Hub</h3>
+              <p>Product · Learning platform</p>
+            </div>
+            <span class="arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></span>
+          </div>
+        </a>
+
+        <a class="work-card" href="https://study-hub-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" data-cursor-label="Open live site">
+          <div class="work-poster">
+            <span class="year">Sub-page</span>
+            <span class="tag">Learning tool</span>
+            <span class="big">Guitar<br />Theory<br />Lab</span>
+            <div class="ui" aria-hidden="true">
+              <div class="ui-bar"><i></i><i></i><i></i></div>
+              <span class="ui-line w45"></span>
+              <span class="ui-block"></span>
+              <span class="ui-line"></span>
+              <span class="ui-line w70"></span>
+              <span class="ui-line w45"></span>
+            </div>
+          </div>
+          <div class="work-body">
+            <div>
+              <h3>Guitar Theory Lab</h3>
+              <p>Study Hub · Interactive lesson</p>
+            </div>
+            <span class="arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></span>
+          </div>
+        </a>
+
+        <a class="work-card" href="https://study-hub-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" data-cursor-label="Open live site">
+          <div class="work-poster">
+            <span class="year">Sub-page</span>
+            <span class="tag">Programme</span>
+            <span class="big">FitLife<br />Blueprint</span>
+            <div class="ui" aria-hidden="true">
+              <div class="ui-bar"><i></i><i></i><i></i></div>
+              <span class="ui-line w70"></span>
+              <span class="ui-block"></span>
+              <span class="ui-line w45"></span>
+              <span class="ui-line"></span>
+            </div>
+          </div>
+          <div class="work-body">
+            <div>
+              <h3>FitLife Blueprint</h3>
+              <p>Study Hub · Training programme</p>
+            </div>
+            <span class="arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></span>
+          </div>
+        </a>
+
+        <a class="work-card" href="https://study-hub-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" data-cursor-label="Open live site">
+          <div class="work-poster">
+            <span class="year">Sub-page</span>
+            <span class="tag">Commerce</span>
+            <span class="big">E-books<br />Store</span>
+            <div class="ui" aria-hidden="true">
+              <div class="ui-bar"><i></i><i></i><i></i></div>
+              <span class="ui-line w45"></span>
+              <span class="ui-line w70"></span>
+              <span class="ui-block"></span>
+              <span class="ui-line"></span>
+            </div>
+          </div>
+          <div class="work-body">
+            <div>
+              <h3>E-books Store</h3>
+              <p>Study Hub · Digital storefront</p>
+            </div>
+            <span class="arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="work-hint">
+      <span>Drag / scroll the row</span>
+      <span class="line" aria-hidden="true"></span>
+      <span>04 builds · 1 product shell</span>
+    </div>
+  </section>
+
+  <!-- ================= CASE STUDY ================= -->
+  <section class="section case" id="case">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">04 — Case study</span>
+          <h2 class="sec-title">One hub,<br /><em>four doors.</em></h2>
+        </div>
+        <p class="sec-sub">The project that proves the range: a single product shell holding three very different experiences.</p>
+      </div>
+
+      <div class="case-grid">
+        <div class="case-sticky">
+          <span class="eyebrow case-kicker" data-reveal>Study Hub — 2026</span>
+          <h3 class="case-title" data-reveal>Learning without<br />the <em>homework</em> feel.</h3>
+          <div class="case-copy" data-reveal>
+            <p>Study Hub is a learning platform with three distinct doors: a music-theory lab, a training programme and a small e-book store. The brief was to make them feel like one place without flattening them into the same page.</p>
+            <p>The shell carries the navigation, type system and pacing; each section gets its own accent, density and interaction model. Commerce stays quiet until it is needed. Lessons lead with rhythm and motion rather than walls of text.</p>
+          </div>
+          <dl class="case-facts" data-reveal>
+            <div class="r"><dt>Role</dt><dd>Design &amp; front-end</dd></div>
+            <div class="r"><dt>Surface</dt><dd>Product shell + 3 sub-apps</dd></div>
+            <div class="r"><dt>Stack</dt><dd>React · TypeScript · CSS</dd></div>
+            <div class="r"><dt>Status</dt><dd>Live on Vercel</dd></div>
+          </dl>
+          <div class="case-links" data-reveal>
+            <a class="btn btn--solid magnet" href="https://study-hub-kappa.vercel.app/" target="_blank" rel="noopener noreferrer">
+              Open the live build
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg>
+            </a>
+            <a class="btn magnet" href="#contact">Discuss a build</a>
+          </div>
+          <div class="case-thumbs" data-reveal>
+            <div class="case-thumb">Guitar Lab</div>
+            <div class="case-thumb">FitLife</div>
+            <div class="case-thumb">E-books</div>
+          </div>
+        </div>
+
+        <div class="case-stage" data-reveal data-tilt>
+          <div class="chrome" aria-hidden="true">
+            <i></i><i></i><i></i>
+            <span>study-hub-kappa.vercel.app</span>
+          </div>
+          <div class="case-ui" aria-hidden="true">
+            <div class="case-side">
+              <span class="brand"></span>
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+            <div class="case-main">
+              <div class="case-top">
+                <b>Keep going</b>
+                <span class="ring"></span>
+              </div>
+              <div class="case-cards">
+                <div class="case-card">
+                  <span class="t"></span><span class="l"></span><span class="l"></span>
+                  <em>Guitar theory</em>
+                </div>
+                <div class="case-card">
+                  <span class="t"></span><span class="l"></span><span class="l"></span>
+                  <em>FitLife</em>
+                </div>
+              </div>
+              <div class="case-wide">
+                <span>E-books · library</span>
+                <span class="wave">
+                  <i style="height:30%"></i><i style="height:62%"></i><i style="height:44%"></i><i style="height:86%"></i><i style="height:52%"></i><i style="height:70%"></i><i style="height:38%"></i><i style="height:64%"></i>
+                </span>
+              </div>
+              <div class="case-wide">
+                <span>Weekly rhythm</span>
+                <span class="wave"><i style="height:18%"></i><i style="height:34%"></i><i style="height:58%"></i><i style="height:42%"></i><i style="height:76%"></i><i style="height:48%"></i><i style="height:30%"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="case-cap"><span>Interface schematic — not a screenshot</span><span>WZ · 001</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="section services" id="services">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">05 — Services</span>
+          <h2 class="sec-title">Ways to<br /><em>work together.</em></h2>
+        </div>
+        <p class="sec-sub">Fixed scope, fixed price, no hourly drift. Every engagement includes design, build and a handover you can actually use.</p>
+      </div>
+
+      <div class="service-list">
+        <article class="service" data-reveal>
+          <span class="n">01</span>
+          <div>
+            <h3>Website design &amp; build</h3>
+            <p>A complete, art-directed site — from first composition to deployed source. One page or ten, the same standard.</p>
+          </div>
+          <div class="tags"><span>Art direction</span><span>Responsive</span><span>CMS-ready</span><span>Deploy</span></div>
+          <span class="plus" aria-hidden="true"></span>
+        </article>
+
+        <article class="service" data-reveal>
+          <span class="n">02</span>
+          <div>
+            <h3>Product interfaces</h3>
+            <p>Application surfaces where the design has to survive real state: dashboards, learning tools, stores.</p>
+          </div>
+          <div class="tags"><span>React</span><span>TypeScript</span><span>Design system</span></div>
+          <span class="plus" aria-hidden="true"></span>
+        </article>
+
+        <article class="service" data-reveal>
+          <span class="n">03</span>
+          <div>
+            <h3>Motion &amp; 3D</h3>
+            <p>Scroll scenes, WebGL hero pieces and micro-interactions — engineered to stay fast and to switch off cleanly.</p>
+          </div>
+          <div class="tags"><span>GSAP</span><span>ScrollTrigger</span><span>Three.js</span><span>Shaders</span></div>
+          <span class="plus" aria-hidden="true"></span>
+        </article>
+
+        <article class="service" data-reveal>
+          <span class="n">04</span>
+          <div>
+            <h3>Template customisation</h3>
+            <p>Take one of the seven directions and make it yours: new palette, copy, imagery and a section that doesn’t exist yet.</p>
+          </div>
+          <div class="tags"><span>Re-skin</span><span>New sections</span><span>Launch</span></div>
+          <span class="plus" aria-hidden="true"></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEMPLATES ================= -->
+  <section class="section templates" id="templates">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">06 — Template library</span>
+          <h2 class="sec-title">Seven directions,<br /><em>one standard.</em></h2>
+        </div>
+        <p class="sec-sub">Seven art directions for real business types. Each sets a palette, type voice and copy tone — pick one and it becomes a full build.</p>
+      </div>
+
+      <div class="tpl-bar" data-reveal>
+        <div class="filters" role="group" aria-label="Filter templates">
+          <button class="filter" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter" type="button" data-filter="studio" aria-pressed="false">Studio</button>
+          <button class="filter" type="button" data-filter="food" aria-pressed="false">Food &amp; drink</button>
+          <button class="filter" type="button" data-filter="product" aria-pressed="false">Product</button>
+          <button class="filter" type="button" data-filter="care" aria-pressed="false">Care</button>
+        </div>
+        <span class="tpl-count" data-tpl-count>07 directions</span>
+      </div>
+
+      <div class="tpl-grid">
+        <article class="tpl wide" data-cat="studio" data-tilt data-reveal>
+          <div class="poster p-atelier">
+            <span class="edge"></span><span class="no">01</span>
+            <div class="mark">Atelier<br />Structura</div>
+            <div class="fine"><span>Architecture</span><span>Est. 2019</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>Atelier Structura</h3><span class="cat">Studio</span></div>
+            <p>A quiet architectural portfolio: full-bleed drawings, a serif voice and a project index that reads like a printed monograph.</p>
+            <div class="spec"><span>6 sections</span><span>Editorial grid</span><span>Serif display</span></div>
+          </div>
+        </article>
+
+        <article class="tpl" data-cat="food" data-tilt data-reveal>
+          <div class="poster p-crumb">
+            <span class="edge"></span><span class="no">02</span>
+            <div class="mark">Crumb<br />&amp; Co.</div>
+            <div class="fine"><span>Sourdough</span><span>Daily</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>Crumb &amp; Co.</h3><span class="cat">Bakery</span></div>
+            <p>Warm, close-cropped and hungry. Menu, story and pre-order in three screens.</p>
+            <div class="spec"><span>Menu</span><span>Order CTA</span></div>
+          </div>
+        </article>
+
+        <article class="tpl" data-cat="food" data-tilt data-reveal>
+          <div class="poster p-ember">
+            <span class="edge"></span><span class="no">03</span>
+            <div class="mark">Ember<br />&amp; Crust</div>
+            <div class="fine"><span>Wood fired</span><span>Since 2014</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>Ember &amp; Crust</h3><span class="cat">Pizzeria</span></div>
+            <p>Heat as a brand: ember gradients, condensed caps and a menu that reads like a night out.</p>
+            <div class="spec"><span>Hero scene</span><span>Menu</span></div>
+          </div>
+        </article>
+
+        <article class="tpl" data-cat="food" data-tilt data-reveal>
+          <div class="poster p-velvet">
+            <span class="edge"></span><span class="no">04</span>
+            <div class="mark">Velvet<br />Brew</div>
+            <div class="fine"><span>Roastery</span><span>Small batch</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>Velvet Brew</h3><span class="cat">Coffee</span></div>
+            <p>Low light, deep blue and a roast list with tasting notes. Built for a counter, not a catalogue.</p>
+            <div class="spec"><span>Roasts</span><span>Subscription</span></div>
+          </div>
+        </article>
+
+        <article class="tpl" data-cat="care" data-tilt data-reveal>
+          <div class="poster p-pure">
+            <span class="edge"></span><span class="no">05</span>
+            <div class="mark">Pure<br />Space</div>
+            <div class="fine"><span>Cleaning</span><span>Book a visit</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>PureSpace Cleaning</h3><span class="cat">Care</span></div>
+            <p>Clinical but friendly: airy type, checklist cards and a booking path that removes every doubt.</p>
+            <div class="spec"><span>Services</span><span>Booking</span></div>
+          </div>
+        </article>
+
+        <article class="tpl" data-cat="studio" data-tilt data-reveal>
+          <div class="poster p-void">
+            <span class="edge"></span><span class="no">06</span>
+            <div class="mark">Void<br />Theory</div>
+            <div class="fine"><span>Fashion</span><span>AW / 26</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>Void Theory</h3><span class="cat">Studio</span></div>
+            <p>Monochrome, tall type and a lookbook that behaves like a film strip. Almost no copy, all posture.</p>
+            <div class="spec"><span>Lookbook</span><span>Editorial</span></div>
+          </div>
+        </article>
+
+        <article class="tpl" data-cat="product" data-tilt data-reveal>
+          <div class="poster p-pizza">
+            <span class="edge"></span><span class="no">07</span>
+            <div class="mark">Pizza<br />Town</div>
+            <div class="fine"><span>Delivery</span><span>Open late</span></div>
+          </div>
+          <div class="tpl-body">
+            <div class="row-top"><h3>Pizza Town</h3><span class="cat">Product</span></div>
+            <p>A conversion-first storefront: build-your-own bar, live totals and a checkout that never leaves the page.</p>
+            <div class="spec"><span>Order flow</span><span>Cart</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section class="section process" id="process">
+    <div class="shell">
+      <div class="sec-head" data-reveal>
+        <div>
+          <span class="idx">07 — Process</span>
+          <h2 class="sec-title">A short,<br /><em>visible</em> process.</h2>
+        </div>
+        <p class="sec-sub">No black boxes. You see the frame, the design and the build as they happen.</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-sticky">
+          <p class="lead" data-reveal>Four beats. <em>No surprises.</em></p>
+          <p data-reveal>Every project starts with a written frame and ends with source you own. The preview link is live from the first week, so feedback happens on the real thing rather than on a picture of it.</p>
+        </div>
+
+        <div class="steps">
+          <article class="step" data-reveal>
+            <span class="no">01</span>
+            <div>
+              <h3>Frame</h3>
+              <p>One call, one paragraph: who it’s for, what it must feel like, what “done” means. I write the brief back to you so we agree on the room before we decorate it.</p>
+              <span class="dur">Day 1 — 2</span>
+            </div>
+          </article>
+          <article class="step" data-reveal>
+            <span class="no">02</span>
+            <div>
+              <h3>Direction</h3>
+              <p>Type, palette and one motif, shown as a full-height composition rather than a moodboard. Two rounds of change are included before the build starts.</p>
+              <span class="dur">Week 1</span>
+            </div>
+          </article>
+          <article class="step" data-reveal>
+            <span class="no">03</span>
+            <div>
+              <h3>Build</h3>
+              <p>The page is assembled live and shared as a preview link. Motion, responsive rules and performance are handled in the same pass as the layout.</p>
+              <span class="dur">Week 2 — 3</span>
+            </div>
+          </article>
+          <article class="step" data-reveal>
+            <span class="no">04</span>
+            <div>
+              <h3>Ship</h3>
+              <p>Deploy, hand over the source and a one-page guide to editing copy. One week of fixes after launch, then it’s yours.</p>
+              <span class="dur">Week 4</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact">
+    <div class="shell">
+      <div class="contact-head">
+        <span class="eyebrow">08 — Contact</span>
+        <span class="pill"><i aria-hidden="true"></i>Available for select projects</span>
+      </div>
+
+      <h2 class="contact-title split">
+        <span class="line"><span>Let’s build</span></span>
+        <span class="line"><span>something</span></span>
+        <span class="line"><span class="outline">impossible</span></span>
+        <span class="line"><span>to ignore.</span></span>
+      </h2>
+
+      <div class="contact-grid">
+        <div>
+          <p class="contact-lead">Tell me about the room you’re building. One paragraph is enough — who it’s for, what it should feel like, when you need it.</p>
+
+          <dl class="contact-lines">
+            <div class="r"><dt>Email</dt><dd><a href="mailto:ayushdanthta@gmail.com">ayushdanthta@gmail.com</a></dd></div>
+            <div class="r"><dt>WhatsApp</dt><dd><a href="https://wa.me/918353011030" target="_blank" rel="noopener noreferrer">+91 83530 11030</a></dd></div>
+            <div class="r"><dt>Base</dt><dd>Shimla, India — remote worldwide</dd></div>
+            <div class="r"><dt>Response</dt><dd>Under one working day</dd></div>
+            <div class="r"><dt>Elsewhere</dt><dd><a href="https://github.com/WizardAyush0099" target="_blank" rel="noopener noreferrer">GitHub</a> · <a href="https://www.instagram.com/a_y_u_s_h0099" target="_blank" rel="noopener noreferrer">Instagram</a></dd></div>
+          </dl>
+
+          <div class="contact-actions">
+            <a class="btn btn--solid magnet" href="https://wa.me/918353011030" target="_blank" rel="noopener noreferrer">
+              WhatsApp me
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg>
+            </a>
+            <a class="btn magnet" href="mailto:ayushdanthta@gmail.com?subject=Project%20enquiry">Email directly</a>
+          </div>
+        </div>
+
+        <!-- Set data-endpoint="https://your-form-endpoint" to POST JSON instead of composing an email. -->
+        <div class="form-card" id="formCard">
+          <div class="form-body">
+            <h3>Project brief</h3>
+            <form id="projectForm" novalidate data-endpoint="">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="f-name">Name</label>
+                  <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+                  <span class="err" data-err="name"></span>
+                </div>
+                <div class="field">
+                  <label for="f-email">Email</label>
+                  <input id="f-email" name="email" type="email" autocomplete="email" placeholder="you@company.com" required />
+                  <span class="err" data-err="email"></span>
+                </div>
+                <div class="field">
+                  <label for="f-type">Project type</label>
+                  <select id="f-type" name="type">
+                    <option>Website design &amp; build</option>
+                    <option>Product interface</option>
+                    <option>Motion &amp; 3D</option>
+                    <option>Template customisation</option>
+                    <option>Something else</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="f-when">Timeline</label>
+                  <select id="f-when" name="when">
+                    <option>Flexible</option>
+                    <option>Within a month</option>
+                    <option>One to two months</option>
+                    <option>This quarter</option>
+                  </select>
+                </div>
+                <div class="field full">
+                  <label for="f-msg">What are we building?</label>
+                  <textarea id="f-msg" name="message" placeholder="The room, the audience, the feeling — and anything that must not be lost." required></textarea>
+                  <span class="err" data-err="message"></span>
+                </div>
+              </div>
+              <div class="form-foot">
+                <button class="btn btn--solid" type="submit" id="formSubmit">
+                  Send the brief
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2"/></svg>
+                </button>
+                <p class="form-note">Opens a pre-filled email in your mail app. Nothing is stored on this site.</p>
+              </div>
+              <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+            </form>
+          </div>
+
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <b>Brief ready.</b>
+            <p>Your mail app should open with the brief filled in. If it didn’t, copy the details below or send them on WhatsApp — either reaches me directly.</p>
+            <div class="row">
+              <a class="btn btn--solid" id="successMail" href="mailto:ayushdanthta@gmail.com">Open email again</a>
+              <a class="btn" id="successWa" href="https://wa.me/918353011030" target="_blank" rel="noopener noreferrer">WhatsApp instead</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" id="footer">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <svg class="crest" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+            <g stroke="currentColor" stroke-width="2">
+              <circle cx="100" cy="48" r="30"/><circle cx="149.5" cy="83.9" r="30"/><circle cx="130.6" cy="142.1" r="30"/><circle cx="69.4" cy="142.1" r="30"/><circle cx="50.5" cy="83.9" r="30"/>
+            </g>
+            <circle cx="100" cy="100" r="27" fill="currentColor"/>
+          </svg>
+          <h3>WZ Studio</h3>
+          <p>Ayush Danthta designs and builds cinematic websites, product interfaces and motion systems from Shimla, India.</p>
+        </div>
+        <div>
+          <h4>Index</h4>
+          <div class="footer-links">
+            <a href="#about">Studio</a>
+            <a href="#work">Work</a>
+            <a href="#case">Case study</a>
+            <a href="#services">Services</a>
+            <a href="#templates">Templates</a>
+          </div>
+        </div>
+        <div>
+          <h4>Elsewhere</h4>
+          <div class="footer-links">
+            <a href="https://github.com/WizardAyush0099" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.instagram.com/a_y_u_s_h0099" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://wzayush.vercel.app/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+            <a href="https://study-hub-kappa.vercel.app/" target="_blank" rel="noopener noreferrer">Study Hub</a>
+            <a href="effects.html">Effects library</a>
+          </div>
+        </div>
+        <div>
+          <h4>Colophon</h4>
+          <div class="footer-links">
+            <span>Anton · Archivo · Instrument Serif</span>
+            <span>Three.js · GSAP · ScrollTrigger</span>
+            <span>Hand-written HTML, CSS and JS</span>
+            <span>No framework, no build step</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <span>© 2026 Ayush Danthta</span>
+        <span>Shimla · India · <span id="clock">--:--</span> IST</span>
+        <span class="motion">Motion <button type="button" id="motionToggle" aria-pressed="true">On</button></span>
+        <a class="top" href="#top">Back to top
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20V4M6 10l6-6 6 6" stroke="currentColor" stroke-width="2"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<noscript>
+  <style>
+    [data-reveal]{opacity:1!important;transform:none!important}
+    .split .line > span{transform:none!important}
+    .loader{display:none}
+    .cursor{display:none}
+  </style>
+</noscript>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/ScrollTrigger.min.js"></script>
+<script type="importmap">
+{ "imports": { "three": "./assets/vendor/three.module.js" } }
+</script>
+<script type="module" src="assets/js/hero3d.js"></script>
+<script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
