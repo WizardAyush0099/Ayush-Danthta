@@ -356,9 +356,11 @@ for key, block in FG.items():
 sub("  const word = 'KAGE', gl = [];", "  const word = 'AYUSH', gl = [];")
 
 # ---------------------------------------------------------------- material grade
-# the moon: a pale Himalayan moon instead of the vermilion one
+# the moon: a pale Himalayan moon instead of the vermilion one. Its sourced
+# disc carries crater noise that reads as mould behind a bloom, so the body is
+# a soft-edged glow and the light comes from the halo around it.
 sub("new THREE.MeshBasicMaterial({ map: tx(texMoon()), color: hdr(3.6, .64, .61),",
-    "new THREE.MeshBasicMaterial({ map: tx(texMoon()), color: hdr(1.08, .98, .84),")
+    "new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(255,251,240,1)', 'rgba(206,222,236,.42)')), color: hdr(1.24, 1.18, 1.04),")
 sub("texGlow('rgba(255,124,112,.90)', 'rgba(206,52,48,.26)')",
     "texGlow('rgba(255,240,214,.88)', 'rgba(206,176,124,.24)')")
 sub("const moonKey = new THREE.DirectionalLight(0xff6a42, .52);",
@@ -514,6 +516,112 @@ PORTRAIT_CSS = '''
 }
 '''
 sub("</style>\n</head>", PORTRAIT_CSS + "</style>\n</head>")
+
+TOWER = r'''/* ---------------------------------------------------- the Bhimakali tower
+   What the Sarahan photograph shows, in order: a whitewashed stone plinth, a
+   square tower of deodar boarding five storeys tall, every storey stepping in
+   under a shallow slate pent that projects past its own walls, and a brass
+   finial above the last one. The eaves run dead level all the way round — the
+   lift is in the stone coursing, not in the corners — which is the whole
+   difference between this building and the swept-eave hall below it. */
+function buildTempleHimachal() {
+  const g = new THREE.Group();
+  const F = PODIUM;
+
+  const board = surface(wallWood(), [5, 2], { color: 0x5d4a34, normal: 1.35 });
+  const post  = surface(postWood(), [1, 1], { color: 0x8b6a4c, normal: 1.05, metalness: .03 });
+  const slate = surface(lib('roof', () => texRoof()), [1, 1],
+    { color: 0x323940, roughness: .84, metalness: .07, normal: 1.15 });
+  const white = surface(texWall(), [2.4, 1], { color: 0x93938c, roughness: .88, metalness: .02 });
+  const brass = new THREE.MeshStandardMaterial({ color: 0x9a7a34, roughness: .34, metalness: .82 });
+
+  const paper = new THREE.MeshBasicMaterial({ color: hdr(.66, .31, .14), fog: true, toneMapped: false });
+  const grid  = new THREE.MeshBasicMaterial({ map: tx(texShoji()), transparent: true,
+    depthWrite: false, fog: true });
+  WORLD.paper = paper;
+  function bay(w, h, x, y, z) {
+    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), paper);
+    p.position.set(x, y, z); g.add(p);
+    const s = new THREE.Mesh(new THREE.PlaneGeometry(w, h), grid);
+    s.position.set(x, y, z + .06); s.renderOrder = 3; g.add(s);
+  }
+
+  /* the plinth: two courses of whitewashed stone, the lower one wider */
+  const pl1 = new THREE.Mesh(new THREE.BoxGeometry(31, 2.0, 16), white);
+  pl1.position.set(0, F + 1.0, TEMPLE_Z + 1); pl1.castShadow = true; pl1.receiveShadow = true; g.add(pl1);
+  const pl2 = new THREE.Mesh(new THREE.BoxGeometry(26, 1.3, 13.4), white);
+  pl2.position.set(0, F + 2.65, TEMPLE_Z + .5); pl2.castShadow = true; pl2.receiveShadow = true; g.add(pl2);
+
+  /* the tower: five storeys, each stepping in under its own slate pent */
+  const TIERS = [[9.2, 3.4, 1.9], [8.5, 2.8, 1.6], [7.8, 2.5, 1.45], [7.0, 2.2, 1.3], [6.2, 2.0, 1.15]];
+  let y = F + 2.9;
+  TIERS.forEach((t, i) => {
+    const w = t[0], h = t[1], ov = t[2];
+    /* the boarding of the storey, standing on the slate of the one below */
+    const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, w), board);
+    body.position.set(0, y + h / 2, TEMPLE_Z); body.castShadow = true; g.add(body);
+    /* corner posts, carved in the original and merely turned here */
+    [-1, 1].forEach(sx => [-1, 1].forEach(sz => {
+      const c = new THREE.Mesh(new THREE.BoxGeometry(.30, h, .30), post);
+      c.position.set(sx * w / 2, y + h / 2, TEMPLE_Z + sz * w / 2); g.add(c);
+    }));
+    /* the lit bays: fewer and wider as the tower goes up */
+    const n = i < 2 ? 3 : 2;
+    for (let k = 0; k < n; k++)
+      bay(w / (n + 1.9), h * .40, (k - (n - 1) / 2) * (w / (n + .2)), y + h * .54,
+        TEMPLE_Z + w / 2 + .02);
+    /* the pent: roofGeo with the corner lift turned almost off, so the eaves
+       run level like quarried slate instead of sweeping like tile */
+    const roof = new THREE.Mesh(roofGeo(w / 2 + ov, w / 2 + ov, 0, 1.0, .30, .03), slate);
+    roof.position.set(0, y + h, TEMPLE_Z); roof.castShadow = true; g.add(roof);
+    const band = new THREE.Mesh(new THREE.BoxGeometry(w + ov * 2.1, .22, w + ov * 2.1), slate);
+    band.position.set(0, y + h + .04, TEMPLE_Z); g.add(band);
+    y += h + .70;
+  });
+
+  /* the finial: shaft, kalash and trident — the one bright thing on the tower */
+  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(.07, .10, 3.0, 12), brass);
+  shaft.position.set(0, y + 1.5, TEMPLE_Z); g.add(shaft);
+  const kal = new THREE.Mesh(new THREE.SphereGeometry(.30, 14, 10), brass);
+  kal.position.set(0, y + 2.9, TEMPLE_Z); g.add(kal);
+  [-.34, 0, .34].forEach((dx, i) => {
+    const prong = new THREE.Mesh(new THREE.ConeGeometry(.055, i === 1 ? 1.0 : .76, 6), brass);
+    prong.position.set(dx, y + 3.6, TEMPLE_Z); g.add(prong);
+  });
+  WORLD.templeTop = y + 4.2;
+
+  /* the wings: long, low deodar halls either side, slate pents, lamps in every bay */
+  [-1, 1].forEach(s => {
+    const len = 15, hgt = 3.5, dep = 5.6;
+    const cx = s * (9.4 + len / 2 + 1.1);
+    const wing = new THREE.Mesh(new THREE.BoxGeometry(len, hgt, dep), board);
+    wing.position.set(cx, F + 2.3 + hgt / 2, TEMPLE_Z + 1.4); wing.castShadow = true; g.add(wing);
+    for (let k = 0; k < 5; k++)
+      bay(1.5, 1.8, cx + (k - 2) * 2.9, F + 2.3 + hgt * .52, TEMPLE_Z + 1.4 + dep / 2 + .02);
+    const wr = new THREE.Mesh(roofGeo(len / 2 + .9, dep / 2 + .9, 1.4, 1.15, .30, .03), slate);
+    wr.position.set(cx, F + 2.3 + hgt, TEMPLE_Z + 1.4); wr.castShadow = true; g.add(wr);
+  });
+
+  scene.add(g); WORLD.temple = g;
+
+  const spill = new THREE.Mesh(new THREE.PlaneGeometry(30, 16),
+    new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(255,150,66,.80)', 'rgba(240,96,26,.24)')),
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .30 }));
+  spill.position.set(0, F + 3.0, TEMPLE_Z + 5.6); spill.renderOrder = 2;
+  scene.add(spill); WORLD.hallHalo = spill;
+
+  const mist = new THREE.Mesh(new THREE.PlaneGeometry(64, 20),
+    new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(150,178,190,.62)', 'rgba(104,138,154,.20)')),
+      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .17 }));
+  mist.position.set(0, F - 1.4, TEMPLE_Z + 10); mist.renderOrder = 2; scene.add(mist);
+
+  return true;
+}
+
+'''
+
+sub("function buildTemple() {\n  const g = new THREE.Group();",
+    TOWER + "function buildTemple() {\n  if (buildTempleHimachal()) return;\n  const g = new THREE.Group();")
 
 OUT.write_text(s, encoding="utf-8")
 print(f"wrote {OUT.relative_to(ROOT)} — {len(s):,} bytes "
