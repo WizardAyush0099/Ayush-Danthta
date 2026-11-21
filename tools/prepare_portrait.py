@@ -82,6 +82,24 @@ def cut_out(img: Image.Image, tolerance: int, feather: float) -> Image.Image:
     return Image.fromarray(out, mode="RGBA")
 
 
+def decontaminate(rgba: "Image.Image") -> "Image.Image":
+    """Remove the white backdrop's contribution from soft edge pixels.
+
+    A part-transparent pixel is the subject composited over white:
+    C = a*F + (1-a)*255. Inverting that (F = (C - (1-a)*255) / a) recovers the
+    subject's real colour there, which is what kills the pale halo you
+    otherwise get around hair when the cut-out sits on a dark page.
+    """
+    arr = np.asarray(rgba).astype(np.float32)
+    rgb = arr[..., :3]
+    a = arr[..., 3:4] / 255.0
+    safe = np.maximum(a, 1e-3)
+    recovered = np.clip((rgb - (1.0 - safe) * 255.0) / safe, 0.0, 255.0)
+    edge = (a > 0.004) & (a < 0.995)
+    arr[..., :3] = np.where(edge, recovered, rgb)
+    return Image.fromarray(arr.astype(np.uint8), mode="RGBA")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Remove a white background and write a portrait cut-out.")
     ap.add_argument("source", nargs="?", default=str(DEFAULT_SRC), help="input image (jpg/png/webp)")
@@ -103,7 +121,7 @@ def main() -> int:
         scale = 2600 / max(img.size)
         img = img.resize((round(img.width * scale), round(img.height * scale)), Image.LANCZOS)
 
-    rgba = cut_out(img, args.tolerance, args.feather)
+    rgba = decontaminate(cut_out(img, args.tolerance, args.feather))
     alpha = np.asarray(rgba.getchannel("A"))
     removed = float((alpha < 8).mean())
 

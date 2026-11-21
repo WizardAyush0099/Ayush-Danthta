@@ -19,7 +19,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="assets/css/main.css" />
+<link rel="stylesheet" href="assets/css/main.css?v=6" />
+<link rel="stylesheet" href="assets/css/journey.css?v=6" />
 <script>document.documentElement.classList.remove('no-js');</script>
 <script type="application/ld+json">
 {
@@ -81,6 +82,7 @@
   </div>
   <nav class="menu-list" aria-label="Site sections">
     <a href="#top"><span>01</span>Opening</a>
+    <a href="#journey"><span>01.1</span>Field notes</a>
     <a href="#about"><span>02</span>Studio</a>
     <a href="#work"><span>03</span>Work</a>
     <a href="#case"><span>04</span>Case study</a>
@@ -148,6 +150,60 @@
       <span><b>Designer</b><i></i><b>Developer</b><i></i><b>Motion</b><i></i><b>WebGL</b><i></i><b>Interface</b><i></i><b>Shimla → Worldwide</b><i></i></span>
     </div>
   </div>
+
+  <!-- ================= FIELD NOTES / 3D JOURNEY ================= -->
+  <section class="journey" id="journey" aria-labelledby="journeyTitle">
+    <div class="journey__pin">
+      <div class="journey__canvas" id="journeyCanvas" aria-hidden="true"></div>
+      <div class="journey__scrim" aria-hidden="true"></div>
+      <div class="journey__grain" aria-hidden="true"></div>
+
+      <div class="journey__hud">
+        <span class="journey__tag">01.1 — Field notes</span>
+        <span class="journey__dist"><b data-distance>000</b> m of ridge</span>
+        <span class="journey__hint" data-hud>Scroll to travel</span>
+      </div>
+
+      <div class="journey__chapters">
+        <article class="chapter" data-chapter="0">
+          <span class="chapter__no"><i>i</i> Origin — Shimla</span>
+          <h2 class="chapter__title" id="journeyTitle">The mountain<br /><em>is the brief.</em></h2>
+          <p>I work from Shimla, a few ridges under the snowline. The cedar-and-slate temple at Sarahan and the deodar forests above Manali are the reference I keep coming back to — heavy material, low light, structure you can read from a long way off.</p>
+        </article>
+
+        <article class="chapter" data-chapter="1">
+          <span class="chapter__no"><i>ii</i> Structure — before surface</span>
+          <h2 class="chapter__title">A frame<br /><em>you can read.</em></h2>
+          <p>Those temples are a grid before they are an ornament: a timber frame carried the full height, carved brackets only where a join wanted to be seen. Interfaces earn trust the same way. Honest structure first, detail where it does work.</p>
+        </article>
+
+        <article class="chapter" data-chapter="2">
+          <span class="chapter__no"><i>iii</i> Light — contrast as wayfinding</span>
+          <h2 class="chapter__title">One light.<br /><em>One direction.</em></h2>
+          <p>Cold blue outside, vermilion and butter-lamp warmth within. The building does its wayfinding with contrast, not signage. On screen that becomes one accent, one direction of light, and everything else held back so the eye knows where to land.</p>
+        </article>
+
+        <article class="chapter" data-chapter="3">
+          <span class="chapter__no"><i>iv</i> Arrival — the work</span>
+          <h2 class="chapter__title">Same room,<br /><em>your screen.</em></h2>
+          <p>That is the transfer — not the mountain, the way it holds you still. Four builds are live right now, and the form below goes straight to my inbox.</p>
+          <div class="chapter__foot">
+            <a class="chapter__link" href="#contact">Start a project
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.6"/></svg>
+            </a>
+            <span class="chapter__credit">Photographs — Bhimakali Temple, Sarahan · deodar forest, Manali</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="journey__rail" aria-hidden="true">
+        <span class="journey__tick" data-tick><span>Origin</span></span>
+        <span class="journey__tick" data-tick><span>Structure</span></span>
+        <span class="journey__tick" data-tick><span>Light</span></span>
+        <span class="journey__tick" data-tick><span>Arrival</span></span>
+      </div>
+    </div>
+  </section>
 
   <!-- ================= ABOUT ================= -->
   <section class="section section--paper about" id="about">
@@ -857,7 +913,8 @@
 <script type="importmap">
 { "imports": { "three": "./assets/vendor/three.module.js" } }
 </script>
-<script type="module" src="assets/js/hero3d.js"></script>
-<script type="module" src="assets/js/app.js"></script>
+<script type="module" src="assets/js/hero3d.js?v=6"></script>
+<script type="module" src="assets/js/journey3d.js?v=7"></script>
+<script type="module" src="assets/js/app.js?v=6"></script>
 </body>
 </html>

@@ -44,3 +44,25 @@ assets/vendor/ScrollTrigger.min.js ScrollTrigger 3.12.5
 
 These are vendored so the site works offline and has no third-party runtime
 dependency. The fonts are loaded from Google Fonts with a system fallback.
+
+FIELD NOTES — THE SCROLL WORLD
+------------------------------
+assets/js/journey3d.js builds the pinned 3D stretch between the hero and the
+studio section: photographs sit at real depths and a camera dollies through
+them along a spline, keyed to scroll. Styles live in assets/css/journey.css.
+
+  assets/img/hp/temple.webp   Bhimakali temple, Sarahan
+  assets/img/hp/ridge.webp    blurred crop of that frame, used for the far ridge
+  assets/img/hp/forest.webp   deodar forest, Manali
+  assets/img/hp/fir.webp      deodar forest, Manali
+  assets/img/hp/canopy.webp   crop of that frame, used as foreground canopy
+
+Originals live in Hp Img/. The pine-forest stock frame there carries a
+watermark across the whole image, so it is not used anywhere on the site.
+
+Every plate is graded in the fragment shader (desaturate, push shadows into the
+page ink, highlights toward cream) so photographs taken in different light read
+as one place. Swapping a file keeps its path — no JS edits needed.
+
+Reduced motion, `data-motion="off"` and a missing WebGL context all fall back to
+a static composition where every chapter stays readable.

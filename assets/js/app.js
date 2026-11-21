@@ -105,7 +105,9 @@ const hero = document.querySelector('.hero');
 function heroIntro() {
   if (!canAnimate) return;
   const hasPhoto = doc.classList.contains('has-photo');
-  if (portrait && hasPhoto) gsap.set(portrait, { xPercent: -50 });
+  /* placement lives in CSS (`translate`), so GSAP is free to own `transform`
+     for parallax without fighting the centring */
+  if (portrait && hasPhoto) gsap.set(portrait, { xPercent: 0 });
 
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
   tl.from('.nav', { yPercent: -110, duration: 1, ease: 'power3.out' }, 0)
