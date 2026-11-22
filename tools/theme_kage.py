@@ -57,6 +57,42 @@ sub('<span>Raising the mountain temple</span>', '<span>Building the mountain</sp
 sub('<span class="brand-tx"><b>KAGE</b><i>HIDDEN REALMS OF KYOTO</i></span>',
     '<span class="brand-tx"><b>AYUSH DANTHTA</b><i>DESIGNER · DEVELOPER · MOTION</i></span>')
 
+# ---------------------------------------------------------------- the mark
+# The original mark is a torii: two lintels and a post. At 34 px it says Kyoto
+# before a word of the page is read. Himachal's mark is a Bhimakali tower —
+# three storeys of deodar stepping out under level slate pents, a whitewashed
+# plinth, one lit door, and a trishul above the whole thing.
+MARK = '''<svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+  <!-- trishul on the finial -->
+  <path d="M22 3.4v7.6M19.5 5.2v5.6M24.5 5.2v5.6"
+        stroke="#dfe7e0" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="22" cy="10.9" r="1" fill="#dfe7e0"/>
+  <!-- the slate pent, thrown wide past the walls -->
+  <path d="M11.4 11.9h21.2l4.6 5.4H6.8Z" fill="#dfe7e0"/>
+  <!-- whitewashed wall behind the deodar frame -->
+  <rect x="11.2" y="17.3" width="21.6" height="12.3" fill="#dfe7e0" fill-opacity=".32"/>
+  <rect x="10" y="17.7" width="2.6" height="11.9" fill="#dfe7e0"/>
+  <rect x="31.4" y="17.7" width="2.6" height="11.9" fill="#dfe7e0"/>
+  <!-- the lit door -->
+  <rect x="19.2" y="22.4" width="5.6" height="7.2" fill="#e0231c"/>
+  <!-- the plinth it stands on -->
+  <rect x="6.6" y="30.2" width="30.8" height="3" fill="#dfe7e0" fill-opacity=".78"/>
+</svg>'''
+sub('''    <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+      <circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>
+      <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
+      <path d="M14 35.5h16" stroke="#dfe7e0" stroke-width="1.2" stroke-opacity=".6"/>
+    </svg>''', '    ' + MARK)
+sub('''      <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+        <circle cx="22" cy="24" r="9.5" stroke="#e0231c" stroke-width="1.2"/>
+        <path d="M6 12h32M9.5 17h25M22 8v28" stroke="#dfe7e0" stroke-width="1.2"/>
+      </svg>''', '      ' + MARK)
+sub('''      <svg viewBox="0 0 44 44" fill="none" width="34" height="34" aria-hidden="true">
+        <circle cx="22" cy="25" r="8.6" fill="#e0231c" fill-opacity=".9"/>
+        <path d="M5 13h34M9 18.4h26M22 8.5v27" stroke="#dfe7e0" stroke-width="1.5"/>
+      </svg>''',
+    '      ' + MARK.replace('fill="none"', 'fill="none" width="34" height="34"'))
+
 sub('''    <a class="nav-link" href="#gate" data-cursor><span>Temples</span><span class="alt">伽藍</span></a>
     <a class="nav-link" href="#pathways" data-cursor><span>Gardens</span><span class="alt">庭園</span></a>
     <a class="nav-link" href="#lessons" data-cursor><span>Rituals</span><span class="alt">神事</span></a>
@@ -524,83 +560,353 @@ TOWER = r'''/* ---------------------------------------------------- the Bhimakal
    finial above the last one. The eaves run dead level all the way round — the
    lift is in the stone coursing, not in the corners — which is the whole
    difference between this building and the swept-eave hall below it. */
+
+/* the carved deodar jali a Himachali window carries: three mullions, a
+   transom or two, and a row of teeth cut along the head. Mostly transparent,
+   so the lamp behind it comes through the gaps. */
+function texJali() {
+  const W = 256, H = 320, c = cvs(W, H), x = c.getContext('2d');
+  x.clearRect(0, 0, W, H);
+  x.strokeStyle = 'rgba(16,11,7,.94)'; x.fillStyle = 'rgba(16,11,7,.94)';
+  x.lineWidth = 22; x.strokeRect(11, 11, W - 22, H - 22);
+  x.lineWidth = 9;
+  [W / 4, W / 2, W * 3 / 4].forEach(v => {
+    x.beginPath(); x.moveTo(v, 0); x.lineTo(v, H); x.stroke();
+  });
+  x.lineWidth = 8;
+  [H * .42, H * .70].forEach(v => {
+    x.beginPath(); x.moveTo(0, v); x.lineTo(W, v); x.stroke();
+  });
+  x.beginPath();
+  for (let i = 0; i < 8; i++) {
+    const w = W / 8, l = i * w;
+    x.moveTo(l, 24); x.lineTo(l + w / 2, 58); x.lineTo(l + w, 24);
+  }
+  x.fill();
+  return c;
+}
+
+/* quarried slate, not charred tile: lift the engine's near-black roof map to
+   the pale grey the Sarahan photograph shows, keeping its ribs and relief */
+function texSlate() {
+  const src = lib('roof', () => texRoof());
+  const W = src.map.width, H = src.map.height;
+  const c = cvs(W, H), x = c.getContext('2d');
+  x.drawImage(src.map, 0, 0);
+  /* soften the glazed-tile ribs: under an eave they read as corrugated metal */
+  x.globalAlpha = .40; x.fillStyle = '#7c7871'; x.fillRect(0, 0, W, H); x.globalAlpha = 1;
+  x.globalCompositeOperation = 'lighter';
+  x.fillStyle = 'rgba(96,94,88,.56)';
+  x.fillRect(0, 0, W, H);
+  x.globalCompositeOperation = 'source-over';
+  return { map: c, normal: src.normal, rough: src.rough };
+}
+
+/* lime-washed stone — the plinth, the parapet and every eave fascia */
+function texPlaster() {
+  const W = 512, H = 512, c = cvs(W, H), x = c.getContext('2d');
+  x.fillStyle = '#b8b4a7'; x.fillRect(0, 0, W, H);
+  x.globalAlpha = .55; x.globalCompositeOperation = 'multiply';
+  x.drawImage(fbmCanvas(W, H, 311, 5, 4, 1.2), 0, 0);
+  x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+  const rnd = mulberry32(71);
+  for (let i = 0; i < 46; i++) {
+    const sx = rnd() * W, ww = 1 + rnd() * 6, top = rnd() * H * .4, len = H * (.2 + rnd() * .6);
+    const g = x.createLinearGradient(0, top, 0, top + len);
+    g.addColorStop(0, 'rgba(60,58,50,0)');
+    g.addColorStop(.4, 'rgba(60,58,50,.10)');
+    g.addColorStop(1, 'rgba(60,58,50,0)');
+    x.fillStyle = g; x.fillRect(sx, top, ww, len);
+  }
+  const h = cvs(W, H), hx = h.getContext('2d');
+  hx.fillStyle = '#8a8a8a'; hx.fillRect(0, 0, W, H);
+  hx.globalAlpha = .5; hx.drawImage(fbmCanvas(W, H, 57, 5, 7, 1.1), 0, 0);
+  return { map: c, normal: normalFromHeight(h, 1.4) };
+}
+
 function buildTempleHimachal() {
   const g = new THREE.Group();
   const F = PODIUM;
 
-  const board = surface(wallWood(), [5, 2], { color: 0x5d4a34, normal: 1.35 });
-  const post  = surface(postWood(), [1, 1], { color: 0x8b6a4c, normal: 1.05, metalness: .03 });
-  const slate = surface(lib('roof', () => texRoof()), [1, 1],
-    { color: 0x323940, roughness: .84, metalness: .07, normal: 1.15 });
-  const white = surface(texWall(), [2.4, 1], { color: 0x93938c, roughness: .88, metalness: .02 });
-  const brass = new THREE.MeshStandardMaterial({ color: 0x9a7a34, roughness: .34, metalness: .82 });
+  /* The photograph reads as a light timber grid over dark boarding: pale
+     deodar posts and rails, near-black panels, grey slate above. Held dark
+     and close, the tower turns into a cardboard cut-out at forty metres. */
+  const board = surface(wallWood(), [4, 2], { color: hdr(1.22, .94, .68), normal: 1.45 });
+  const post  = surface(postWood(), [1, 1], { color: hdr(2.30, 1.86, 1.36), normal: 1.10, metalness: .03 });
+  const beam  = surface(postWood(), [1, 1], { color: 0x2c2116, normal: 1.30 });
+  /* the engine's roof map is charred tile: near-black by design. The temple
+     borrows its relief, not its albedo. */
+  const slate = surface(texSlate(), [1, 1],
+    { color: 0xd2cec4, roughness: .86, metalness: .04, normal: .90 });
+  const white = surface(texPlaster(), [3.6, 1.8], { color: 0xdedacd, roughness: .93, metalness: .01 });
+  const stone = surface(texPlaster(), [3, 2], { color: 0x8c8d87, roughness: .95, metalness: .01 });
+  const brass = new THREE.MeshStandardMaterial({ color: 0x9a7a34, roughness: .34, metalness: .82,
+    emissive: 0x140e04, emissiveIntensity: .60 });
 
-  const paper = new THREE.MeshBasicMaterial({ color: hdr(.66, .31, .14), fog: true, toneMapped: false });
-  const grid  = new THREE.MeshBasicMaterial({ map: tx(texShoji()), transparent: true,
-    depthWrite: false, fog: true });
+  /* The lamps. Every opening is a warm plane with a carved jali hung in front
+     of it; both are merged at the end, so forty windows cost two draw calls. */
+  const paper = new THREE.MeshBasicMaterial({ color: hdr(.46, .22, .085), fog: true, toneMapped: false });
+  const jali  = new THREE.MeshBasicMaterial({ map: tx(texJali()), transparent: true,
+    depthWrite: false, fog: true, opacity: .94 });
   WORLD.paper = paper;
-  function bay(w, h, x, y, z) {
-    const p = new THREE.Mesh(new THREE.PlaneGeometry(w, h), paper);
-    p.position.set(x, y, z); g.add(p);
-    const s = new THREE.Mesh(new THREE.PlaneGeometry(w, h), grid);
-    s.position.set(x, y, z + .06); s.renderOrder = 3; g.add(s);
+
+  const glowG = [], jaliG = [], woodG = [], beamG = [], slateG = [], brassG = [], whiteG = [];
+
+  /* One opening: jambs, a carved lintel, a deep sill, a centre mullion and two
+     little brackets. ry turns the whole frame on to a side face. */
+  function win(w, h, x, y, z, ry) {
+    const t = .16, d = .28;
+    const bar = (bw, bh, bd, ox, oy) => {
+      const q = new THREE.BoxGeometry(bw, bh, bd);
+      q.translate(ox, oy, 0); q.rotateY(ry); q.translate(x, y, z); woodG.push(q);
+    };
+    bar(w + t * 2.2, t * 1.15, d, 0,  h / 2 + t * .58);
+    bar(w + t * 2.2, t * 1.55, d * 1.4, 0, -h / 2 - t * .78);
+    bar(t, h, d, -w / 2 - t * .5, 0);
+    bar(t, h, d,  w / 2 + t * .5, 0);
+    bar(t * .55, h, d * .8, 0, 0);
+    bar(.34, .20, d * 1.1, -w / 2 - t * 1.3, h / 2 - .12);
+    bar(.34, .20, d * 1.1,  w / 2 + t * 1.3, h / 2 - .12);
+    const p = new THREE.PlaneGeometry(w, h);
+    p.rotateY(ry); p.translate(x, y, z); glowG.push(p);
+    const j = new THREE.PlaneGeometry(w, h);
+    j.rotateY(ry); j.translate(x + Math.sin(ry) * .045, y, z + Math.cos(ry) * .045); jaliG.push(j);
   }
 
-  /* the plinth: two courses of whitewashed stone, the lower one wider */
-  const pl1 = new THREE.Mesh(new THREE.BoxGeometry(31, 2.0, 16), white);
-  pl1.position.set(0, F + 1.0, TEMPLE_Z + 1); pl1.castShadow = true; pl1.receiveShadow = true; g.add(pl1);
-  const pl2 = new THREE.Mesh(new THREE.BoxGeometry(26, 1.3, 13.4), white);
-  pl2.position.set(0, F + 2.65, TEMPLE_Z + .5); pl2.castShadow = true; pl2.receiveShadow = true; g.add(pl2);
+  function mergeInto(list, mat, cast, order) {
+    if (!list.length) return null;
+    const m = new THREE.Mesh(mergeGeos(list), mat);
+    m.castShadow = !!cast; m.receiveShadow = true;
+    if (order) m.renderOrder = order;
+    g.add(m); return m;
+  }
 
-  /* the tower: five storeys, each stepping in under its own slate pent */
-  const TIERS = [[9.2, 3.4, 1.9], [8.5, 2.8, 1.6], [7.8, 2.5, 1.45], [7.0, 2.2, 1.3], [6.2, 2.0, 1.15]];
-  let y = F + 2.9;
-  TIERS.forEach((t, i) => {
-    const w = t[0], h = t[1], ov = t[2];
-    /* the boarding of the storey, standing on the slate of the one below */
-    const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, w), board);
-    body.position.set(0, y + h / 2, TEMPLE_Z); body.castShadow = true; g.add(body);
-    /* corner posts, carved in the original and merely turned here */
-    [-1, 1].forEach(sx => [-1, 1].forEach(sz => {
-      const c = new THREE.Mesh(new THREE.BoxGeometry(.30, h, .30), post);
-      c.position.set(sx * w / 2, y + h / 2, TEMPLE_Z + sz * w / 2); g.add(c);
-    }));
-    /* the lit bays: fewer and wider as the tower goes up */
-    const n = i < 2 ? 3 : 2;
-    for (let k = 0; k < n; k++)
-      bay(w / (n + 1.9), h * .40, (k - (n - 1) / 2) * (w / (n + .2)), y + h * .54,
-        TEMPLE_Z + w / 2 + .02);
-    /* the pent: roofGeo with the corner lift turned almost off, so the eaves
-       run level like quarried slate instead of sweeping like tile */
-    const roof = new THREE.Mesh(roofGeo(w / 2 + ov, w / 2 + ov, 0, 1.0, .30, .03), slate);
-    roof.position.set(0, y + h, TEMPLE_Z); roof.castShadow = true; g.add(roof);
-    const band = new THREE.Mesh(new THREE.BoxGeometry(w + ov * 2.1, .22, w + ov * 2.1), slate);
-    band.position.set(0, y + h + .04, TEMPLE_Z); g.add(band);
-    y += h + .70;
-  });
+  const TZ = TEMPLE_Z;
 
-  /* the finial: shaft, kalash and trident — the one bright thing on the tower */
-  const shaft = new THREE.Mesh(new THREE.CylinderGeometry(.07, .10, 3.0, 12), brass);
-  shaft.position.set(0, y + 1.5, TEMPLE_Z); g.add(shaft);
-  const kal = new THREE.Mesh(new THREE.SphereGeometry(.30, 14, 10), brass);
-  kal.position.set(0, y + 2.9, TEMPLE_Z); g.add(kal);
-  [-.34, 0, .34].forEach((dx, i) => {
-    const prong = new THREE.Mesh(new THREE.ConeGeometry(.055, i === 1 ? 1.0 : .76, 6), brass);
-    prong.position.set(dx, y + 3.6, TEMPLE_Z); g.add(prong);
-  });
-  WORLD.templeTop = y + 4.2;
-
-  /* the wings: long, low deodar halls either side, slate pents, lamps in every bay */
+  /* ---- the terrace: one long stone platform, whitewashed at its edge,
+          carrying the tower and both wings ------------------------------- */
+  const terrace = new THREE.Mesh(new THREE.BoxGeometry(33, 1.7, 17.6), stone);
+  terrace.position.set(0, F + .85, TZ + .6);
+  terrace.castShadow = true; terrace.receiveShadow = true; g.add(terrace);
+  whiteG.push(new THREE.BoxGeometry(33.3, .42, 17.9).translate(0, F + 1.50, TZ + .6));
+  /* the last four risers, coming up off the head of the long flight */
+  const risers = [];
+  for (let i = 0; i < 4; i++) {
+    const hh = 1.66 - i * .41;
+    risers.push(new THREE.BoxGeometry(6.2 + i * .26, hh, .62)
+      .translate(0, F + hh / 2, TZ + 9.45 + i * .60));
+  }
+  const riser = new THREE.Mesh(mergeGeos(risers), stone);
+  riser.castShadow = true; riser.receiveShadow = true; g.add(riser);
+  /* the low stone parapet either side of those risers */
   [-1, 1].forEach(s => {
-    const len = 15, hgt = 3.5, dep = 5.6;
-    const cx = s * (9.4 + len / 2 + 1.1);
-    const wing = new THREE.Mesh(new THREE.BoxGeometry(len, hgt, dep), board);
-    wing.position.set(cx, F + 2.3 + hgt / 2, TEMPLE_Z + 1.4); wing.castShadow = true; g.add(wing);
-    for (let k = 0; k < 5; k++)
-      bay(1.5, 1.8, cx + (k - 2) * 2.9, F + 2.3 + hgt * .52, TEMPLE_Z + 1.4 + dep / 2 + .02);
-    const wr = new THREE.Mesh(roofGeo(len / 2 + .9, dep / 2 + .9, 1.4, 1.15, .30, .03), slate);
-    wr.position.set(cx, F + 2.3 + hgt, TEMPLE_Z + 1.4); wr.castShadow = true; g.add(wr);
+    const pw = 9.8;
+    const par = new THREE.Mesh(new THREE.BoxGeometry(pw, .62, .46), stone);
+    par.position.set(s * (3.1 + pw / 2), F + 2.01, TZ + 9.4);
+    par.castShadow = true; par.receiveShadow = true; g.add(par);
+    slateG.push(new THREE.BoxGeometry(pw + .16, .13, .60)
+      .translate(s * (3.1 + pw / 2), F + 2.38, TZ + 9.4));
   });
+
+  /* ---- the tower base: one more whitewashed course under the boarding -- */
+  const baseY = F + 2.45;
+  const podium2 = new THREE.Mesh(new THREE.BoxGeometry(23, .75, 12.4), white);
+  podium2.position.set(0, F + 2.08, TZ);
+  podium2.castShadow = true; podium2.receiveShadow = true; g.add(podium2);
+
+  /* ---- the tower: five storeys, each stepping out under its own pent ---- */
+  const TIERS = [[9.4, 3.2, 2.05], [8.7, 2.7, 1.85], [8.0, 2.4, 1.65], [7.2, 2.1, 1.50], [6.4, 1.9, 1.35]];
+  let y = baseY, apexY = 0;
+  TIERS.forEach((t, i) => {
+    const w = t[0], h = t[1], ov = t[2], hw = w / 2;
+    const body = new THREE.Mesh(new THREE.BoxGeometry(w, h, w), board);
+    body.position.set(0, y + h / 2, TZ);
+    body.castShadow = true; body.receiveShadow = true; g.add(body);
+
+    /* the whitewashed floor band, the head beam, four corner posts and two
+       mid posts a face — the frame the photograph reads first */
+    whiteG.push(new THREE.BoxGeometry(w + .38, .20, w + .38).translate(0, y + .10, TZ));
+    beamG.push(new THREE.BoxGeometry(w + .36, .18, w + .36).translate(0, y + h - .09, TZ));
+    [-1, 1].forEach(sx => [-1, 1].forEach(sz =>
+      woodG.push(new THREE.BoxGeometry(.34, h, .34).translate(sx * hw, y + h / 2, TZ + sz * hw))));
+    const mid = hw * .52;
+    [-1, 1].forEach(s => {
+      woodG.push(new THREE.BoxGeometry(.24, h, .22).translate(s * mid, y + h / 2, TZ + hw));
+      woodG.push(new THREE.BoxGeometry(.24, h, .22).translate(s * mid, y + h / 2, TZ - hw));
+      woodG.push(new THREE.BoxGeometry(.22, h, .24).translate(hw, y + h / 2, TZ + s * mid));
+      woodG.push(new THREE.BoxGeometry(.22, h, .24).translate(-hw, y + h / 2, TZ + s * mid));
+    });
+
+    /* the openings: two a face low down, one a face above */
+    const wn = i < 2 ? 2 : 1;
+    const ww = Math.min(1.46, w * .17), wh = Math.min(1.62, h * .52);
+    for (let k = 0; k < wn; k++) {
+      const off = (k - (wn - 1) / 2) * (ww + 1.30);
+      win(ww, wh, off, y + h * .54, TZ + hw + .03, 0);
+      win(ww, wh, off, y + h * .54, TZ - hw - .03, Math.PI);
+      for (const s of [-1, 1])
+        win(ww, wh, s * (hw + .03), y + h * .54, TZ + off, s > 0 ? Math.PI / 2 : -Math.PI / 2);
+    }
+
+    /* the carved corbel band that throws the pent out past the wall. Deodar,
+       not black: as silhouettes these read as a comb of slots, not brackets. */
+    const nb = Math.max(4, Math.round(w / 1.18));
+    for (let k = 0; k < nb; k++) {
+      const bx = -hw + .62 + k * ((w - 1.24) / (nb - 1));
+      woodG.push(new THREE.BoxGeometry(.22, .34, ov * .92).translate(bx, y + h - .20, TZ + hw + ov * .34));
+      woodG.push(new THREE.BoxGeometry(.22, .34, ov * .92).translate(bx, y + h - .20, TZ - hw - ov * .34));
+      woodG.push(new THREE.BoxGeometry(ov * .92, .34, .22).translate(hw + ov * .34, y + h - .20, TZ + bx));
+      woodG.push(new THREE.BoxGeometry(ov * .92, .34, .22).translate(-hw - ov * .34, y + h - .20, TZ + bx));
+    }
+
+    /* eave fascia, then the pent itself — dead level, quarried slate, thrown
+       well past the wall so it lays a hard shadow across the boarding */
+    const ew = w + ov * 2, pitch = i < 2 ? .88 : .80, rim = hw + ov - .06;
+    /* the eave edge: a thick stone fascia with a thin slate cap over it, so
+       seen from below the pent has a body and not just a line */
+    slateG.push(new THREE.BoxGeometry(ew + .14, .28, .18).translate(0, y + h + .02, TZ + rim));
+    slateG.push(new THREE.BoxGeometry(ew + .14, .28, .18).translate(0, y + h + .02, TZ - rim));
+    slateG.push(new THREE.BoxGeometry(.18, .28, ew + .14).translate(rim, y + h + .02, TZ));
+    slateG.push(new THREE.BoxGeometry(.18, .28, ew + .14).translate(-rim, y + h + .02, TZ));
+    whiteG.push(new THREE.BoxGeometry(ew + .04, .10, .12).translate(0, y + h + .17, TZ + rim));
+    whiteG.push(new THREE.BoxGeometry(ew + .04, .10, .12).translate(0, y + h + .17, TZ - rim));
+    whiteG.push(new THREE.BoxGeometry(.12, .10, ew + .04).translate(rim, y + h + .17, TZ));
+    whiteG.push(new THREE.BoxGeometry(.12, .10, ew + .04).translate(-rim, y + h + .17, TZ));
+    const roof = new THREE.Mesh(roofGeo(ew / 2, ew / 2, 0, pitch, .44, .02), slate);
+    roof.position.set(0, y + h, TZ); roof.castShadow = true; g.add(roof);
+
+    /* a brass spike stands at each corner of every pent, the way the small
+       finials do in the photograph */
+    [-1, 1].forEach(sx => [-1, 1].forEach(sz =>
+      brassG.push(new THREE.ConeGeometry(.05, .58, 5)
+        .translate(sx * rim, y + h + .28, TZ + sz * rim))));
+
+    /* two rails tie the posts: the horizontal half of the timber grid */
+    [.24, .80].forEach(f => {
+      woodG.push(new THREE.BoxGeometry(w + .06, .10, .17).translate(0, y + h * f, TZ + hw + .03));
+      woodG.push(new THREE.BoxGeometry(w + .06, .10, .17).translate(0, y + h * f, TZ - hw - .03));
+      woodG.push(new THREE.BoxGeometry(.17, .10, w + .06).translate(hw + .03, y + h * f, TZ));
+      woodG.push(new THREE.BoxGeometry(.17, .10, w + .06).translate(-hw - .03, y + h * f, TZ));
+    });
+
+    apexY = y + h + pitch;
+    y += h + pitch * .62;
+  });
+
+  /* the finial: lotus, mast, kalash, trishul — the one bright thing up here */
+  brassG.push(new THREE.CylinderGeometry(.55, .82, .30, 12).translate(0, apexY + .12, TZ));
+  brassG.push(new THREE.CylinderGeometry(.10, .15, 2.5, 10).translate(0, apexY + 1.52, TZ));
+  brassG.push(new THREE.SphereGeometry(.38, 14, 10).translate(0, apexY + 2.34, TZ));
+  brassG.push(new THREE.CylinderGeometry(.09, .09, .26, 10).translate(0, apexY + 2.73, TZ));
+  brassG.push(new THREE.CylinderGeometry(.045, .045, 1.4, 6).translate(0, apexY + 3.45, TZ));
+  brassG.push(new THREE.BoxGeometry(.72, .05, .05).translate(0, apexY + 3.52, TZ));
+  [-.30, 0, .30].forEach((dx, k) =>
+    brassG.push(new THREE.ConeGeometry(.052, k ? 1.10 : .80, 6)
+      .translate(dx, apexY + 3.9 + (k ? -.24 : 0), TZ)));
+  WORLD.templeTop = apexY + 4.9;
+
+  /* ---- the door: a deep carved opening, under a veranda that carries the
+          lowest pent across the width of the front ---------------------- */
+  const dY = baseY, dH = 2.7, dW = 2.15, dZ = TZ + 4.7;
+  const doorTrim = new THREE.Mesh(mergeGeos([
+    new THREE.BoxGeometry(dW + .90, .34, .52).translate(0, dY + dH + .17, dZ + .10),
+    new THREE.BoxGeometry(.34, dH + .10, .52).translate(-(dW / 2 + .42), dY + dH / 2, dZ + .10),
+    new THREE.BoxGeometry(.34, dH + .10, .52).translate( (dW / 2 + .42), dY + dH / 2, dZ + .10),
+    new THREE.BoxGeometry(dW + 1.0, .18, .62).translate(0, dY + dH + .38, dZ + .14)
+  ]), beam);
+  doorTrim.castShadow = true; g.add(doorTrim);
+  [-1, 1].forEach(s => {
+    const leaf = new THREE.Mesh(new THREE.BoxGeometry(dW / 2 - .04, dH, .14), beam);
+    leaf.position.set(s * dW / 4, dY + dH / 2, dZ + .05); leaf.castShadow = true; g.add(leaf);
+    for (let r = 0; r < 3; r++)
+      brassG.push(new THREE.SphereGeometry(.045, 6, 5)
+        .translate(s * dW / 4, dY + .62 + r * .74, dZ + .14));
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(.13, .022, 6, 12), brass);
+    ring.position.set(s * .30, dY + 1.45, dZ + .16); g.add(ring);
+  });
+
+  /* the veranda posts, tucked under the first pent's outer edge */
+  const vTop = baseY + 3.16;
+  [-1, 1].forEach(s => {
+    const vp = new THREE.Mesh(new THREE.BoxGeometry(.32, vTop - (F + 1.7), .32), post);
+    vp.position.set(s * 2.8, (vTop + F + 1.7) / 2, dZ + 1.9); vp.castShadow = true; g.add(vp);
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(.58, .20, .58), beam);
+    cap.position.set(s * 2.8, vTop - .10, dZ + 1.9); g.add(cap);
+    const foot = new THREE.Mesh(new THREE.BoxGeometry(.54, .26, .54), white);
+    foot.position.set(s * 2.8, F + 1.7 + .13, dZ + 1.9); g.add(foot);
+  });
+  const vBeam = new THREE.Mesh(new THREE.BoxGeometry(6.4, .26, .34), beam);
+  vBeam.position.set(0, vTop - .30, dZ + 1.9); vBeam.castShadow = true; g.add(vBeam);
+  /* two lamps hanging from it, at the door */
+  [-1, 1].forEach(s => {
+    brassG.push(new THREE.CylinderGeometry(.016, .016, .34, 5).translate(s * 1.55, vTop - .58, dZ + 1.9));
+    brassG.push(new THREE.CylinderGeometry(.13, .19, .32, 9).translate(s * 1.55, vTop - .90, dZ + 1.9));
+    brassG.push(new THREE.SphereGeometry(.055, 7, 5).translate(s * 1.55, vTop - 1.10, dZ + 1.9));
+  });
+
+  /* ---- the wings: long low halls either side, on the same terrace ---- */
+  [-1, 1].forEach(s => {
+    const len = 11, hgt = 3.3, dep = 5.2;
+    const cx = s * 10.9, cz = TZ + 2.1, wy = F + 1.7;
+    const wbase = new THREE.Mesh(new THREE.BoxGeometry(len + .5, .55, dep + .5), stone);
+    wbase.position.set(cx, wy + .275, cz);
+    wbase.castShadow = true; wbase.receiveShadow = true; g.add(wbase);
+    const wing = new THREE.Mesh(new THREE.BoxGeometry(len, hgt, dep), board);
+    wing.position.set(cx, wy + .55 + hgt / 2, cz);
+    wing.castShadow = true; wing.receiveShadow = true; g.add(wing);
+    /* the whitewashed lower wall, with the deodar posts standing proud of it */
+    whiteG.push(new THREE.BoxGeometry(len + .03, .95, dep + .03)
+      .translate(cx, wy + .55 + .475, cz));
+
+    /* the boarded wall is framed: sill, head, and a post every bay */
+    beamG.push(new THREE.BoxGeometry(len + .30, .20, dep + .34).translate(cx, wy + .66, cz));
+    beamG.push(new THREE.BoxGeometry(len + .30, .18, dep + .34).translate(cx, wy + .55 + hgt - .08, cz));
+    const bays = 4;
+    for (let k = 0; k <= bays; k++)
+      woodG.push(new THREE.BoxGeometry(.26, hgt, .26)
+        .translate(cx - len / 2 + k * (len / bays), wy + .55 + hgt / 2, cz + dep / 2));
+    const bw = 1.30, bh = 1.55;
+    for (let k = 0; k < bays; k++) {
+      const wx = cx + (k - (bays - 1) / 2) * (len / bays);
+      win(bw, bh, wx, wy + .55 + hgt * .52, cz + dep / 2 + .03, 0);
+    }
+    /* the pent, level, with its own corbel band and a bell at each end */
+    const ov = 1.15, ew2 = len + ov * 2, ed = dep + ov * 2;
+    for (let k = 0; k < 7; k++) {
+      const bx = cx - len / 2 + .8 + k * ((len - 1.6) / 6);
+      beamG.push(new THREE.BoxGeometry(.24, .40, ov * .9)
+        .translate(bx, wy + .55 + hgt - .22, cz + dep / 2 + ov * .34));
+    }
+    const wr = new THREE.Mesh(roofGeo(ew2 / 2, ed / 2, 1.4, 1.10, .30, .03), slate);
+    wr.position.set(cx, wy + .55 + hgt, cz); wr.castShadow = true; g.add(wr);
+    slateG.push(new THREE.BoxGeometry(ew2 + .1, .24, .14)
+      .translate(cx, wy + .55 + hgt + .07, cz + ed / 2 - .06));
+    [-1, 1].forEach(e => {
+      const bx = cx + e * (len / 2 - .5), bz = cz + dep / 2 + ov * .55;
+      brassG.push(new THREE.CylinderGeometry(.015, .015, .36, 5).translate(bx, wy + .55 + hgt - .10, bz));
+      brassG.push(new THREE.CylinderGeometry(.09, .13, .22, 9).translate(bx, wy + .55 + hgt - .36, bz));
+    });
+  });
+
+  mergeInto(woodG, post, true);
+  mergeInto(beamG, beam, true);
+  mergeInto(slateG, slate, false);
+  mergeInto(brassG, brass, false);
+  mergeInto(whiteG, white, true);
+  mergeInto(glowG, paper, false);
+  mergeInto(jaliG, jali, false, 3);
+
+  /* one warm lamp at the door, so the veranda has depth under the pent */
+  const doorLamp = new THREE.PointLight(0xffa860, .42, 11, 2);
+  doorLamp.position.set(0, dY + 2.5, dZ + 2.2); g.add(doorLamp);
+  /* a low raking fill on the facade only. The moon is behind the tower, so
+     without it the posts, the slate and the window frames are a silhouette;
+     kept below the eaves, it also lights the rafters from underneath. */
+  const facade = new THREE.PointLight(0xc2ab8e, 4.0, 38, 1.8);
+  facade.position.set(2, F + 4.6, TZ + 16); g.add(facade);
+  /* and the warm spill the lamps throw up the boarding above the veranda */
+  const wash = new THREE.PointLight(0xff9a52, 1.9, 16, 1.7);
+  wash.position.set(0, baseY + 3.2, dZ + 3.0); g.add(wash);
 
   scene.add(g); WORLD.temple = g;
 
