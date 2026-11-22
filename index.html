@@ -927,6 +927,61 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   .portrait-band > img{ justify-self:start; order:-1; width:min(72vw,300px); }
   .portrait-band figcaption{ padding-bottom:0; }
 }
+
+/* ============================================================ deodar belt
+   Two things the page was missing: trees at the edge of the frame, and the
+   forest under the chapter named after one. The belt is composited from the
+   same deodar specimen as the single tree and cropped by object-fit, so only
+   the crowns and the first trunks show — it frames the page instead of
+   standing on the reading. */
+[data-fg="lessons"] .fg-grove{
+  left:-5%; right:-5%; bottom:-12px; height:clamp(130px,20vh,230px);
+}
+[data-fg="lessons"] .fg-grove > img{
+  width:100%; height:100%; object-fit:cover; object-position:50% 14%;
+  filter:saturate(.70) brightness(.54);
+}
+
+/* ===================================================== forest field notes
+   Three frames of the supplied photographs, graded into the night so the
+   daylight belt does not arrive as a lit panel in a dark room. */
+.field-notes{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(10px,1.6vw,26px);
+  width:100%; max-width:min(100%,940px); margin:clamp(38px,6.5vh,78px) auto 0;
+}
+.field-notes figure{ margin:0; }
+.fn-fr{
+  display:block; position:relative; overflow:hidden; aspect-ratio:4/3;
+  background:#080d10; box-shadow:inset 0 0 0 1px rgba(223,231,224,.13);
+}
+.fn-fr img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:saturate(.50) brightness(.50) contrast(1.12);
+  transition:filter .8s var(--ease), transform 1.6s var(--ease-out);
+}
+.field-notes figure:hover .fn-fr img{ filter:saturate(.72) brightness(.74) contrast(1.04); transform:scale(1.05); }
+.fn-fr::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(180deg, rgba(4,7,10,.06), rgba(4,7,10,.30) 62%, rgba(4,7,10,.66));
+}
+.field-notes figcaption{
+  display:flex; justify-content:space-between; gap:10px; margin-top:10px;
+  font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+}
+.field-notes figcaption b{ font-weight:500; color:#a9b4ad; }
+/* the closing chapter is a two-column grid whose right column carries the
+   vertical ARRIVAL; the strip takes a row of its own across both columns */
+body[data-layout-closing="b"] .fin .field-notes{
+  grid-column:1 / -1; grid-row:4; justify-self:center;
+  width:100%; max-width:min(100%,940px);
+}
+@media (max-width:820px){
+  .field-notes{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .field-notes figure:first-child{ grid-column:1 / -1; }
+  .field-notes figure:first-child .fn-fr{ aspect-ratio:16/10; }
+  .field-notes figcaption span{ display:none; }
+}
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -1027,7 +1082,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     </div>
   </div>
 
-  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Preview: Sanmon, before the bell">
+  <a class="peek" href="#pathways" data-view="3" data-rv="fade" data-cursor aria-label="Preview: the temple dwara, before the bell">
     <!-- data-frame, or the live view is blitted over the whole anchor and
          runs on down behind the caption instead of stopping at the frame -->
     <span class="peek-fr" data-frame></span>
@@ -1047,7 +1102,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   <!-- foreground: the wall arrives first, the pine at the edge, the grass last -->
   <div class="fg" data-fg="gate" aria-hidden="true">
     <span class="fg-el fg-pine" data-fg-in="right">
-      <img src="assets/kage/fg/pine-tree.webp" alt="" width="1024" height="1438" loading="lazy" decoding="async">
+      <img src="assets/kage/fg/deodar-tree.webp" alt="" width="1024" height="1438" loading="lazy" decoding="async">
     </span>
     <span class="fg-el fg-grass" data-fg-in="up">
       <img src="assets/kage/fg/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
@@ -1098,7 +1153,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
       <img src="assets/kage/fg/hill.webp" alt="" width="1774" height="887" loading="lazy" decoding="async">
     </span>
     <span class="fg-el fg-stones" data-fg-in="left">
-      <img src="assets/kage/fg/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
+      <img src="assets/kage/fg/hp-slate-stones.webp" alt="" width="952" height="554" loading="lazy" decoding="async">
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
@@ -1136,14 +1191,14 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 <section class="sec" id="lessons" data-cam="3">
   <!-- foreground: a low periphery for the atlas — wall fragment, basalt, one stand of grass -->
   <div class="fg" data-fg="lessons" aria-hidden="true">
-    <span class="fg-el fg-pine fg-el--flip" data-fg-in="right">
-      <img src="assets/kage/fg/pine-tree.webp" alt="" width="1024" height="1438" loading="lazy" decoding="async">
-    </span>
     <span class="fg-el fg-stones" data-fg-in="up">
-      <img src="assets/kage/fg/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
+      <img src="assets/kage/fg/hp-slate-stones.webp" alt="" width="952" height="554" loading="lazy" decoding="async">
     </span>
     <span class="fg-el fg-grass" data-fg-in="up">
       <img src="assets/kage/fg/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
+    </span>
+    <span class="fg-el fg-grove" data-fg-in="up">
+      <img src="assets/kage/fg/deodar-grove.webp" alt="" width="2600" height="820" loading="lazy" decoding="async">
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
@@ -1198,9 +1253,6 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <span class="fg-el fg-grass" data-fg-in="up">
       <img src="assets/kage/fg/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
     </span>
-    <span class="fg-el fg-pine" data-fg-in="left">
-      <img src="assets/kage/fg/pine-tree.webp" alt="" width="1024" height="1438" loading="lazy" decoding="async">
-    </span>
   </div>
   <div class="eyebrow" data-rv="fade">Chapter 05 — Arrival</div>
   <h2 class="display" data-rv="up">Arrival</h2>
@@ -1210,6 +1262,20 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <i></i><span>Start a project</span>
     <svg viewBox="0 0 14 14" fill="none" width="13" height="13"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
   </a>
+  <div class="field-notes" data-rv="fade">
+    <figure>
+      <span class="fn-fr"><img src="assets/img/hp/fir.webp" alt="Deodar and fir on the slope above Shimla" loading="lazy" decoding="async"></span>
+      <figcaption><b>The belt</b><span>2,300 m</span></figcaption>
+    </figure>
+    <figure>
+      <span class="fn-fr"><img src="assets/img/hp/ridge.webp" alt="The snow line along a Himalayan ridge" loading="lazy" decoding="async" style="object-position:22% 45%; filter:saturate(.72) contrast(1.22) brightness(.58)"></span>
+      <figcaption><b>The snow line</b><span>Dhauladhar</span></figcaption>
+    </figure>
+    <figure>
+      <span class="fn-fr"><img src="assets/img/hp/canopy.webp" alt="A deodar crown lit against the dark forest" loading="lazy" decoding="async" style="object-position:50% 32%"></span>
+      <figcaption><b>The crown</b><span>Sarahan</span></figcaption>
+    </figure>
+  </div>
 </section>
 
 <!-- ============================================================ footer -->
@@ -1220,7 +1286,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
       <img src="assets/kage/fg/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
     </span>
     <span class="fg-el fg-stones" data-fg-in="up">
-      <img src="assets/kage/fg/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
+      <img src="assets/kage/fg/hp-slate-stones.webp" alt="" width="952" height="554" loading="lazy" decoding="async">
     </span>
   </div>
   <div class="foot-grid">
@@ -1814,26 +1880,54 @@ function texShoji() {
 
 /* one maple leaf, white on transparent — tinted per instance */
 function texLeaf() {
-  const S = 128, c = cvs(S, S), x = c.getContext('2d');
-  x.translate(S / 2, S * .92); x.scale(S / 2.2, -S / 2.2);
+  /* A deodar sprig: a tapered feather of needles, widest a third of the way
+     out and drawn to a point. The body is filled and then combed apart with
+     transparent cuts, so it holds together at distance — fine strokes alone
+     mip away to nothing and leave the crown looking bare. White on
+     transparent: the material tint decides the green. */
+  const S = 256, c = cvs(S, S), x = c.getContext('2d');
+  const rnd = mulberry32(7);
+  const y0 = S * .5, x0 = S * .04, x1 = S * .96;
+
   x.beginPath();
-  const lobes = 5, spread = 1.9;
-  for (let i = 0; i < lobes; i++) {
-    const a = -spread / 2 + spread * (i / (lobes - 1)) + Math.PI / 2;
-    const len = i === 2 ? .96 : (i === 1 || i === 3 ? .82 : .60);
-    const wob = .17;
-    x.moveTo(0, .02);
-    x.lineTo(Math.cos(a - wob) * len * .55, Math.sin(a - wob) * len * .55);
-    x.lineTo(Math.cos(a) * len, Math.sin(a) * len);
-    x.lineTo(Math.cos(a + wob) * len * .55, Math.sin(a + wob) * len * .55);
-    x.closePath();
+  x.moveTo(x0, y0);
+  for (let i = 0; i <= 24; i++) {
+    const u = i / 24;
+    const px = x0 + (x1 - x0) * u;
+    x.lineTo(px, y0 - S * .235 * Math.pow(Math.sin(Math.PI * Math.pow(u, .70)), .75));
   }
+  for (let i = 24; i >= 0; i--) {
+    const u = i / 24;
+    const px = x0 + (x1 - x0) * u;
+    x.lineTo(px, y0 + S * .215 * Math.pow(Math.sin(Math.PI * Math.pow(u, .76)), .80));
+  }
+  x.closePath();
   x.fillStyle = '#fff'; x.fill();
-  x.lineWidth = .05; x.strokeStyle = '#fff'; x.stroke();
-  x.setTransform(1, 0, 0, 1, 0, 0);
+
+  /* comb the body into needles with transparent splits fanning off the midrib */
   x.globalCompositeOperation = 'destination-out';
-  const rnd = mulberry32(3);
-  for (let i = 0; i < 40; i++) { x.beginPath(); x.arc(rnd() * S, rnd() * S, rnd() * 3, 0, TAU); x.fill(); }
+  const N = 52;
+  for (let i = 0; i < N; i++) {
+    const u = (i + .5) / N;
+    const px = x0 + (x1 - x0) * u;
+    for (let sd = -1; sd <= 1; sd += 2) {
+      x.beginPath(); x.moveTo(px, y0 + sd * S * .008);
+      x.lineTo(px + S * .045, y0 + sd * S * .255);
+      x.lineWidth = 1.0 + rnd() * 1.5; x.stroke();
+    }
+  }
+  for (let i = 0; i < 9; i++) {
+    x.beginPath();
+    x.moveTo(x1 - S * .09 + rnd() * S * .04, y0);
+    x.lineTo(x1 + S * .04, y0 - S * .14 + rnd() * S * .28);
+    x.lineWidth = 1.2 + rnd() * 1.6; x.stroke();
+  }
+  x.globalCompositeOperation = 'source-over';
+
+  /* the midrib stays solid */
+  x.beginPath(); x.moveTo(x0, y0);
+  x.quadraticCurveTo(S * .5, y0 - S * .015, x1, y0);
+  x.lineWidth = S * .012; x.strokeStyle = '#fff'; x.lineCap = 'round'; x.stroke();
   return c;
 }
 
@@ -2215,7 +2309,8 @@ function texGrassCutout(seed, opt) {
   return c;
 }
 
-/* wet foreground boulders */
+/* Himachali slate: bedded grey-blue rock split into slabs, lichen on the dry
+   faces, moss where it meets the ground */
 function texRockCutout(seed, opt) {
   opt = opt || {};
   const W = opt.w || 1536, H = opt.h || 1024;
@@ -2225,109 +2320,163 @@ function texRockCutout(seed, opt) {
 
   blobs.forEach((b, bi) => {
     const cx2 = b[0] * W, cy = b[1] * H, rx = b[2] * W * .5, ry = b[3] * H * .8;
+
     x.beginPath();
-    for (let a = 0; a <= 128; a++) {
-      const t = a / 128 * TAU;
-      const k = 1 + .17 * fbm(n, Math.cos(t) * 1.7 + bi * 9, Math.sin(t) * 1.7, 4, 2.1, .55);
+    for (let a = 0; a <= 160; a++) {
+      const t = a / 160 * TAU;
+      const ledge = Math.sin(t * 6 + bi * 2.3) * .018;
+      const k = 1 + .14 * fbm(n, Math.cos(t) * 1.7 + bi * 9, Math.sin(t) * 1.7, 4, 2.1, .55) + ledge;
       const px = cx2 + Math.cos(t) * rx * k, py = cy + Math.sin(t) * ry * k;
       a === 0 ? x.moveTo(px, py) : x.lineTo(px, py);
     }
     x.closePath();
     const g = x.createLinearGradient(cx2 - rx, cy - ry, cx2 + rx * .4, cy + ry);
-    const s = 1 - bi * .16;
-    g.addColorStop(0, hex(30 * s, 39 * s, 40 * s));
-    g.addColorStop(.42, hex(14 * s, 19 * s, 20 * s));
-    g.addColorStop(1, hex(6, 9, 9));
+    g.addColorStop(0, hex(72, 84, 90));
+    g.addColorStop(.34, hex(41, 51, 57));
+    g.addColorStop(.72, hex(24, 31, 36));
+    g.addColorStop(1, hex(13, 18, 22));
     x.fillStyle = g; x.fill();
     x.save(); x.clip();
-    x.globalCompositeOperation = 'overlay'; x.globalAlpha = .62;
-    x.drawImage(fbmCanvas(768, 512, seed + bi * 31, 6, 4, 1.1), 0, 0, W, H);
-    x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
-    /* facets */
-    for (let f = 0; f < 26; f++) {
+
+    /* the bedding: courses of slate, each a little off level */
+    let y = cy - ry * 1.1;
+    const rows = 12 + bi * 3;
+    for (let r = 0; r < rows; r++) {
+      const bh = ry * 2.2 / rows * (.7 + rnd() * .7);
+      const tilt = (rnd() - .5) * .09;
+      const x0 = cx2 - rx * 1.4, x1 = cx2 + rx * 1.4;
+      const y0a = y + (x0 - cx2) * tilt, y0b = y + (x1 - cx2) * tilt;
+      const y1a = y0a + bh, y1b = y0b + bh;
       x.beginPath();
-      const fx = cx2 + (rnd() - .5) * rx * 2, fy = cy + (rnd() - .5) * ry * 1.6;
-      x.moveTo(fx, fy);
-      for (let v = 0; v < 3; v++) x.lineTo(fx + (rnd() - .5) * rx * .8, fy + (rnd() - .5) * ry * .6);
+      x.moveTo(x0, y0a); x.lineTo(x1, y0b); x.lineTo(x1, y1b); x.lineTo(x0, y1a);
       x.closePath();
-      x.fillStyle = rnd() > .5 ? 'rgba(255,255,255,.030)' : 'rgba(0,0,0,.14)';
+      const sh = .4 + rnd() * .6;
+      x.fillStyle = hex(26 + 26 * sh, 34 + 34 * sh, 40 + 38 * sh);
+      x.globalAlpha = .22 + rnd() * .42;
+      x.fill();
+      x.globalAlpha = 1;
+      x.beginPath(); x.moveTo(x0, y0a); x.lineTo(x1, y0b);
+      x.strokeStyle = 'rgba(7,11,14,' + (.26 + rnd() * .42) + ')';
+      x.lineWidth = .8 + rnd() * 2.6; x.stroke();
+      x.beginPath(); x.moveTo(x0, y0a + 1.2); x.lineTo(x1, y0b + 1.2);
+      x.strokeStyle = 'rgba(172,190,194,' + (.03 + rnd() * .11) + ')';
+      x.lineWidth = 1 + rnd() * 1.6; x.stroke();
+      y += bh;
+    }
+
+    /* joint cracks down the face */
+    for (let f = 0; f < 10; f++) {
+      const jx = cx2 + (rnd() - .5) * rx * 1.7;
+      let jy = cy - ry * .95;
+      x.beginPath(); x.moveTo(jx, jy);
+      for (let s2 = 0; s2 < 4; s2++) { jy += ry * .5; x.lineTo(jx + (rnd() - .5) * 24, jy); }
+      x.strokeStyle = 'rgba(5,8,10,' + (.18 + rnd() * .34) + ')';
+      x.lineWidth = .7 + rnd() * 1.8; x.stroke();
+    }
+
+    /* lichen: pale sage on the weathered tops, rust on the sheltered faces */
+    for (let i = 0; i < 260; i++) {
+      const lx = cx2 + (rnd() - .5) * rx * 1.75, ly = cy + (rnd() - .65) * ry * 1.5;
+      const rad = 1.5 + rnd() * 8;
+      x.beginPath();
+      for (let a2 = 0; a2 <= 12; a2++) {
+        const t2 = a2 / 12 * TAU;
+        const rr2 = rad * (.55 + .75 * rnd());
+        const px2 = lx + Math.cos(t2) * rr2, py2 = ly + Math.sin(t2) * rr2 * .7;
+        a2 === 0 ? x.moveTo(px2, py2) : x.lineTo(px2, py2);
+      }
+      x.closePath();
+      x.fillStyle = rnd() > .42 ? 'rgba(139,152,124,.11)' : 'rgba(150,106,62,.10)';
       x.fill();
     }
-    /* wet highlight along the upper rim */
-    x.lineWidth = 3 + rnd() * 4; x.strokeStyle = 'rgba(178,206,206,.20)';
+
+    /* moss at the foot, where the rock holds the melt */
+    x.globalCompositeOperation = 'source-atop';
+    for (let i = 0; i < 3000; i++) {
+      const px = rnd() * W, py = H - Math.pow(rnd(), 1.9) * H * .55;
+      x.fillStyle = 'rgba(' + (48 + rnd() * 42 | 0) + ',' + (74 + rnd() * 48 | 0) + ',' + (38 + rnd() * 28 | 0) + ',' + (.05 + rnd() * .23) + ')';
+      x.fillRect(px, py, 1.4 + rnd() * 2.4, 3 + rnd() * 9);
+    }
+    x.globalCompositeOperation = 'source-over';
+    x.restore();
+
+    /* the lit rim, cold — high stone under a Himalayan moon */
+    x.lineWidth = 2 + rnd() * 3;
+    x.strokeStyle = 'rgba(180,198,202,.15)';
     x.beginPath();
-    for (let a = 0; a <= 60; a++) {
-      const t = Math.PI + a / 60 * Math.PI * .78;
-      const k = 1 + .17 * fbm(n, Math.cos(t) * 1.7 + bi * 9, Math.sin(t) * 1.7, 4, 2.1, .55);
-      const px = cx2 + Math.cos(t) * rx * k * .97, py = cy + Math.sin(t) * ry * k * .97;
-      a === 0 ? x.moveTo(px, py) : x.lineTo(px, py);
+    for (let a3 = 0; a3 <= 70; a3++) {
+      const t3 = Math.PI + a3 / 70 * Math.PI * .82;
+      const k3 = 1 + .16 * fbm(n, Math.cos(t3) * 1.7 + bi * 9, Math.sin(t3) * 1.7, 4, 2.1, .55);
+      const px3 = cx2 + Math.cos(t3) * rx * k3 * .97, py3 = cy + Math.sin(t3) * ry * k3 * .97;
+      a3 === 0 ? x.moveTo(px3, py3) : x.lineTo(px3, py3);
     }
     x.stroke();
-    x.restore();
   });
 
-  /* a little moss where they meet the ground */
+  /* cool grade: slate reads blue in this light */
   x.globalCompositeOperation = 'source-atop';
-  for (let i = 0; i < 2600; i++) {
-    const px = rnd() * W, py = H - Math.pow(rnd(), 1.7) * H * .5;
-    x.fillStyle = 'rgba(' + (40 + rnd() * 40 | 0) + ',' + (60 + rnd() * 46 | 0) + ',34,' + (.05 + rnd() * .22) + ')';
-    x.fillRect(px, py, 1.6 + rnd() * 2.4, 3 + rnd() * 9);
-  }
-  const rb = x.createLinearGradient(W, 0, 0, 0);
-  rb.addColorStop(0, 'rgba(190,48,22,.16)'); rb.addColorStop(.7, 'rgba(0,0,0,0)');
-  x.fillStyle = rb; x.fillRect(0, 0, W, H);
+  const cg = x.createLinearGradient(W, 0, 0, H);
+  cg.addColorStop(0, 'rgba(104,132,150,.15)'); cg.addColorStop(.65, 'rgba(0,0,0,0)');
+  x.fillStyle = cg; x.fillRect(0, 0, W, H);
   x.globalCompositeOperation = 'source-over';
   return c;
 }
 
-/* a maple bough leaning into the top of frame */
+/* a deodar bough leaning into the top of frame */
 function texBranchCutout(seed) {
   const W = 1536, H = 1024;
   const c = cvs(W, H), x = c.getContext('2d');
   const rnd = mulberry32(seed);
-  const leaves = [];
+
+  /* a cedar frond is needles hung off a woody midrib; the midrib is drawn
+     first, then the needle fans along it, so the spray has a spine */
+  function needleFan(px, py, ang, rad) {
+    x.save(); x.translate(px, py); x.rotate(ang);
+    for (let i = 0; i < 30; i++) {
+      const sd = i % 2 ? 1 : -1;
+      const off = (rnd() - .5) * 30;
+      const spread = sd * (.5 + rnd() * 1.0);
+      const L = rad * (.42 + rnd() * .85);
+      const ex = off + Math.cos(spread) * L * .6, ey = Math.sin(spread) * L;
+      x.beginPath(); x.moveTo(off, 0);
+      x.quadraticCurveTo(off + Math.cos(spread) * L * .28, ey * .5, ex, ey);
+      const v = rnd();
+      x.strokeStyle = 'rgba(' + (28 + v * 26 | 0) + ',' + (54 + v * 32 | 0) + ',' + (36 + v * 22 | 0) + ',' + (.5 + .42 * rnd()) + ')';
+      x.lineWidth = 1 + rnd() * 2.1;
+      x.lineCap = 'round';
+      x.stroke();
+    }
+    x.restore();
+  }
 
   function bough(px, py, ang, len, wid, depth) {
-    const steps = 7;
+    const steps = 8;
     let cx2 = px, cy = py, a = ang;
+    const pts = [];
     x.beginPath(); x.moveTo(cx2, cy);
     for (let s = 0; s < steps; s++) {
-      a += (rnd() - .5) * .30;
-      cx2 += Math.cos(a) * len / steps; cy += Math.sin(a) * len / steps;
+      a += (rnd() - .5) * .18;
+      cx2 += Math.cos(a) * len / steps;
+      cy += Math.sin(a) * len / steps + len / steps * .08;   /* it hangs */
       x.lineTo(cx2, cy);
+      pts.push([cx2, cy, a, s / steps]);
     }
     x.lineCap = 'round'; x.lineWidth = wid;
-    x.strokeStyle = 'rgba(' + (26 + depth * 5 | 0) + ',' + (22 + depth * 4 | 0) + ',' + (22 + depth * 4 | 0) + ',1)';
+    x.strokeStyle = 'rgba(' + (40 + depth * 5 | 0) + ',' + (31 + depth * 4 | 0) + ',' + (25 + depth * 3 | 0) + ',1)';
     x.stroke();
-    if (depth < 4 && len > 34) {
-      const k = depth === 0 ? 3 : 2;
-      for (let i = 0; i < k; i++) bough(cx2, cy, a + (rnd() - .5) * 1.25, len * (.58 + rnd() * .18), wid * .58, depth + 1);
-    } else {
-      for (let i = 0; i < 9; i++)
-        leaves.push([cx2 + (rnd() - .5) * 78, cy + (rnd() - .5) * 78, rnd() * TAU, 12 + rnd() * 20, rnd()]);
+    pts.forEach(p => needleFan(p[0], p[1], p[2], (32 + 34 * (1 - p[3])) * (1 - depth * .10)));
+    if (depth < 3 && len > 150) {
+      for (let i = 0; i < 2; i++)
+        bough(cx2, cy, a + (rnd() - .5) * 1.2, len * (.5 + rnd() * .16), wid * .55, depth + 1);
     }
   }
-  bough(W * 1.02, H * .06, Math.PI * .78, 420, 26, 0);
-  bough(W * .86, -H * .02, Math.PI * .62, 330, 18, 1);
 
-  const leafImg = texLeaf();
-  const tint = cvs(128, 128), tx = tint.getContext('2d');
-  leaves.forEach(l => {
-    tx.clearRect(0, 0, 128, 128);
-    tx.drawImage(leafImg, 0, 0);
-    tx.globalCompositeOperation = 'source-in';
-    const v = l[4];
-    tx.fillStyle = hex(24 + v * 30, 50 + v * 44, 22 + v * 22);
-    tx.fillRect(0, 0, 128, 128);
-    tx.globalCompositeOperation = 'source-over';
-    x.save(); x.translate(l[0], l[1]); x.rotate(l[2]);
-    x.globalAlpha = .78 + v * .22;
-    x.drawImage(tint, -l[3], -l[3], l[3] * 2, l[3] * 2);
-    x.restore();
-  });
-  x.globalAlpha = 1;
+  bough(W * 1.01, H * .03, Math.PI * .82, 480, 24, 0);
+  bough(W * .87, H * .02, Math.PI * .63, 350, 15, 1);
+  bough(W * .96, H * .34, Math.PI * .96, 300, 12, 1);
   return c;
 }
+
 /* ================================================================= 4 · gl */
 const canvas = document.getElementById('gl');
 /* The layout viewport, not the window. On mobile `innerWidth` follows the
@@ -3185,73 +3334,185 @@ function placeMoon() {
 }
 
 function buildTorii() {
-  /* the weathering costs the gate a lot of its chroma, so the tint puts it
-     back: red lifted well past green and blue rather than a flat brightening,
-     or the vermilion comes out of the grade as brick */
-  const lac = surface(postWood(), [2, 1],
-    { color: hdr(1.16, .96, .74), roughness: .88, metalness: .03, normal: .9 });
-  const gold = new THREE.MeshStandardMaterial({ color: 0x4a382a, roughness: .62, metalness: .22 });
-  const g = new THREE.Group();
-  const BASE = .78, H = 8.2, SPAN = 3.55;
+  const timber = surface(postWood(), [2, 2],
+    { color: hdr(1.10, .90, .68), roughness: .88, metalness: .03, normal: .95 });
+  const board = surface(postWood(), [1.4, 2.2],
+    { color: hdr(.50, .37, .26), roughness: .92, metalness: .02, normal: 1.05 });
+  const lime = surface(texPlaster(), [2.6, 1.3],
+    { color: 0xe4e3d6, roughness: .95, metalness: .01, normal: .30 });
+  const stone = surface(texPlaster(), [4, 2.5],
+    { color: 0x8a8a82, roughness: .96, metalness: .01, normal: 1.15 });
+  const slate = surface(texSlate(), [1, 1],
+    { color: 0x8d959b, roughness: .86, metalness: .06, normal: 1.05 });
+  const brass = new THREE.MeshStandardMaterial({ color: 0x6f4f27, roughness: .40, metalness: .66 });
+  const iron  = new THREE.MeshStandardMaterial({ color: 0x2b2521, roughness: .56, metalness: .44 });
+  const jali  = new THREE.MeshStandardMaterial({
+    map: tx(texJali(), { wrap: THREE.RepeatWrapping, repeat: [6, 1] }),
+    color: 0xb6a78b, roughness: .90, metalness: .02,
+    transparent: true, alphaTest: .30, side: THREE.DoubleSide });
 
+  const g = new THREE.Group();
+  const BASE = .58, HALF = 6.0, IN = 1.50, HEAD = BASE + 3.30, Z = -.55;
+
+  function box(w, h, d, x, y, z, m, cast) {
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m);
+    mesh.position.set(x, y, z);
+    mesh.receiveShadow = true;
+    if (cast !== false) mesh.castShadow = true;
+    g.add(mesh); return mesh;
+  }
+  /* a bell on its chain: four links, a flared body, a lip and a clapper */
+  function bell(px, top, len, r) {
+    const c = new THREE.Group();
+    for (let i = 0; i < 4; i++) {
+      const l = new THREE.Mesh(new THREE.TorusGeometry(.05, .017, 6, 12), brass);
+      l.position.y = -i * .15; c.add(l);
+    }
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(r * .60, r, r * 1.55, 20), brass);
+    body.position.y = -len; body.castShadow = true; c.add(body);
+    const lip = new THREE.Mesh(new THREE.TorusGeometry(r * .97, .034, 6, 22), brass);
+    lip.rotation.x = Math.PI / 2; lip.position.y = -len - r * .78; c.add(lip);
+    const clap = new THREE.Mesh(new THREE.SphereGeometry(r * .22, 10, 8), iron);
+    clap.position.y = -len - r * .96; c.add(clap);
+    c.position.set(px, top, 2.30); g.add(c);
+  }
+
+  /* --- the platform: dressed stone, two risers down to the court */
+  box(12.60, BASE, 5.60, 0, BASE / 2, -.10, stone);
+  box(5.20, .20, .70, 0, .10, 2.86, stone);
+  box(4.80, .20, .70, 0, .30, 2.60, stone);
+
+  /* --- the wall. Whitewash over stone, a slate string course, stone again:
+     the banding every temple wall in the valley is built from. */
+  const SEG = HALF - IN, SX = IN + SEG / 2;
   [-1, 1].forEach(s => {
-    const col = new THREE.Mesh(new THREE.CylinderGeometry(.30, .38, H, 26), lac);
-    col.position.set(s * SPAN, BASE + H / 2, 0); col.castShadow = true; g.add(col);
-    const foot = new THREE.Mesh(new THREE.CylinderGeometry(.46, .50, .52, 26), gold);
-    foot.position.set(s * SPAN, BASE + .26, 0); foot.castShadow = true; g.add(foot);
-    const collar = new THREE.Mesh(new THREE.CylinderGeometry(.345, .345, .26, 26), gold);
-    collar.position.set(s * SPAN, BASE + H - 1.42, 0); g.add(collar);
-    /* the ornate bracket where the beams cross the column */
-    const br = new THREE.Mesh(new THREE.BoxGeometry(.86, .30, .86), gold);
-    br.position.set(s * SPAN, BASE + H - .72, 0); g.add(br);
-    const br2 = new THREE.Mesh(new THREE.BoxGeometry(.60, .52, .60), gold);
-    br2.position.set(s * SPAN, BASE + H - .34, 0); g.add(br2);
-    [-1, 1].forEach(d => {
-      const wing = new THREE.Mesh(new THREE.BoxGeometry(.24, .70, .18), gold);
-      wing.position.set(s * SPAN + d * .40, BASE + H - .62, .30); g.add(wing);
-      const wing2 = wing.clone(); wing2.position.z = -.30; g.add(wing2);
-    });
+    box(SEG, .58, .56, s * SX, BASE + .29, Z, stone);
+    box(SEG, 1.66, .52, s * SX, BASE + 1.41, Z, lime);
+    box(SEG, .20, .64, s * SX, BASE + 2.34, Z, stone);
+    box(SEG, 2.12, .50, s * SX, BASE + 3.50, Z, lime);
+    /* a framed niche in each flank, the way the walls of a dwara are panelled */
+    box(1.46, 1.42, .06, s * 3.70, 3.30, -.285, board, false);
+    box(1.62, .13, .16, s * 3.70, 4.06, -.27, timber);
+    box(1.62, .13, .16, s * 3.70, 2.54, -.27, timber);
+    box(.13, 1.42, .16, s * 3.70 + s * .745, 3.30, -.27, timber);
+    box(.13, 1.42, .16, s * 3.70 - s * .745, 3.30, -.27, timber);
+  });
+  /* the panel over the door, between the carved lintel and the jali band */
+  box(3.00, .66, .50, 0, 4.81, Z, lime);
+  box(12.10, .22, .58, 0, 5.25, Z, stone);
+
+  /* --- the jali band: lattice over a dark board, mullions and rails in front */
+  box(12.10, .94, .30, 0, 5.83, Z + .02, board);
+  const jp = new THREE.Mesh(new THREE.PlaneGeometry(11.60, .90), jali);
+  jp.position.set(0, 5.83, Z + .20); g.add(jp);
+  for (let x = -5.50; x <= 5.51; x += 1.000) box(.11, .94, .16, x, 5.83, -.25, timber);
+  box(12.10, .14, .20, 0, 5.43, -.25, timber);
+  box(12.10, .14, .20, 0, 6.24, -.25, timber);
+
+  /* --- the carved frieze, its dentil course and three brass medallions */
+  box(12.30, .70, .74, 0, 6.71, Z + .06, timber);
+  for (let x = -5.90; x <= 5.91; x += .46) box(.20, .20, .24, x, 6.26, -.055, timber);
+  [-4.00, 0, 4.00].forEach(x => {
+    box(.62, .62, .05, x, 6.71, -.115, board, false);
+    const m = new THREE.Mesh(new THREE.TorusGeometry(.26, .05, 8, 22), brass);
+    m.position.set(x, 6.71, -.085); g.add(m);
+    box(.11, .11, .05, x, 6.71, -.08, brass);
   });
 
-  /* nuki — the straight beam that pierces the columns */
-  const nuki = new THREE.Mesh(new THREE.BoxGeometry(9.4, .52, .46), lac);
-  nuki.position.set(0, BASE + H - 2.15, 0); nuki.castShadow = true; g.add(nuki);
+  /* --- the wall plate the roof lands on */
+  box(12.60, .24, 1.05, 0, 7.16, Z + .14, timber);
 
-  /* gakuzuka — the little strut at the centre */
-  const gak = new THREE.Mesh(new THREE.BoxGeometry(.46, 1.22, .40), lac);
-  gak.position.set(0, BASE + H + .10, 0); g.add(gak);
-  const gakG = new THREE.Mesh(new THREE.BoxGeometry(.60, .18, .50), gold);
-  gakG.position.set(0, BASE + H + .68, 0); g.add(gakG);
+  /* --- the porch: four square deodar posts, capitals, a beam and a purlin */
+  [2.15, 4.75].forEach(ax => [-1, 1].forEach(s => {
+    const px = s * ax;
+    box(.44, .30, .44, px, BASE + .15, 2.30, stone);
+    box(.38, 5.96, .38, px, BASE + 3.28, 2.30, timber);
+    box(.58, .18, .58, px, 6.90, 2.30, timber);
+  }));
+  box(11.00, .30, .44, 0, 7.09, 2.30, timber);
+  box(11.80, .22, .30, 0, 7.18, 3.28, timber);
 
-  /* The crown. A torii lifts its lintels at the ends; a Himachali entrance is
-     square-cut deodar under a slate pitch, so both beams run dead level. */
-  const shimaki = new THREE.Mesh(new THREE.BoxGeometry(10.1, .34, .46), lac);
-  shimaki.position.set(0, BASE + H - .52, 0); shimaki.castShadow = true; g.add(shimaki);
+  /* --- the roof: a shallow hipped pitch of slate slabs. No flare: the lift at
+     the corners is what makes a roof read as a pagoda, and a Himachali pitch
+     is dead flat with a heavy eave. */
+  const roof = new THREE.Mesh(roofGeo(6.80, 2.55, 5.50, 1.38, .30, 0), slate);
+  roof.position.set(0, 7.30, .95); roof.castShadow = true; roof.receiveShadow = true; g.add(roof);
+  box(11.80, .22, .44, 0, 8.62, .95, slate);
+  [-5.35, 5.35].forEach(x => box(.28, .26, .46, x, 8.68, .95, slate));
 
-  const kasagi = new THREE.Mesh(new THREE.BoxGeometry(11.7, .40, .52), lac);
-  kasagi.position.set(0, BASE + H + .58, 0); kasagi.castShadow = true; g.add(kasagi);
-  /* the cap rail the roof sits on */
-  const cap = new THREE.Mesh(new THREE.BoxGeometry(11.9, .22, .58), lac);
-  cap.position.set(0, BASE + H + .96, 0); g.add(cap);
+  /* --- the trishul on the ridge, the one mark the temple shares */
+  (function trishul() {
+    const t = new THREE.Group();
+    const shaft = new THREE.Mesh(new THREE.CylinderGeometry(.035, .035, 1.40, 8), brass);
+    shaft.position.y = .70; t.add(shaft);
+    const bar = new THREE.Mesh(new THREE.BoxGeometry(.54, .05, .06), brass);
+    bar.position.y = 1.06; t.add(bar);
+    [-1, 0, 1].forEach(i => {
+      const p = new THREE.Mesh(new THREE.CylinderGeometry(.028, .020, .54, 8), brass);
+      p.position.set(i * .14, 1.32 - Math.abs(i) * .05, 0);
+      p.rotation.z = -i * .22; t.add(p);
+    });
+    const k = new THREE.Mesh(new THREE.SphereGeometry(.075, 10, 8), brass);
+    k.position.y = .28; t.add(k);
+    t.position.set(0, 8.68, .95); t.scale.setScalar(.92); g.add(t);
+  })();
 
-  /* Himachali roof over the gate. A kath-kuni entrance is a timber frame under
-     a slate pitch, so the crown gets a real roof instead of the bare lintel. */
-  const gateSlate = surface(lib('roof', () => texRoof()), [1, 1],
-    { color: 0x3b444c, roughness: .82, metalness: .08, normal: 1.3 });
-  const gateRoof = new THREE.Mesh(roofGeo(6.15, 2.55, 1.05, 1.0, .20, .30), gateSlate);
-  gateRoof.position.set(0, BASE + H + 1.30, 0); gateRoof.castShadow = true; g.add(gateRoof);
-  const gateRidge = new THREE.Mesh(new THREE.BoxGeometry(4.4, .26, .38), gateSlate);
-  gateRidge.position.set(0, BASE + H + 2.32, 0); gateRidge.castShadow = true; g.add(gateRidge);
+  /* --- the doorway: pegged deodar jambs, a carved lintel, studded leaves */
+  [-1, 1].forEach(s => {
+    box(.34, 3.52, .74, s * 1.63, BASE + 1.76, Z + .02, timber);
+    box(.30, .22, .86, s * 1.63, HEAD + .30, Z + .04, timber);
+  });
+  box(4.00, .40, .80, 0, 4.26, Z + .02, timber);
+  for (let x = -1.75; x <= 1.76; x += .45) box(.16, .16, .18, x, 3.96, -.055, timber);
+  box(3.20, .09, .06, 0, 4.26, -.125, brass);
 
-  /* the gate stands at the foot of the flight, not over the court — small
-     enough that the hall keeps the top of the frame to itself */
-  /* The lowest thing on the gate is the foot of each column, and it starts
-     at BASE — so anchoring the group at y=0 left the whole torii hanging
-     BASE*scale above the court. Drop it by exactly that and the feet land. */
-  const GS = .72;
-  g.position.set(0, -BASE * GS, -8.6); g.scale.setScalar(GS);
-  scene.add(g); WORLD.torii = g;
+  box(3.40, .16, .92, 0, BASE + .08, Z + .14, stone);
+
+  [-1, 1].forEach(s => {
+    const lx = s * .68;
+    box(1.34, 3.18, .14, lx, BASE + 1.60, Z + .16, board);
+    /* five raised boards a leaf, the way the door in the photograph is cut */
+    for (let i = 0; i < 5; i++) box(.20, 2.96, .06, lx + (i - 2) * .25, BASE + 1.60, -.275, board);
+    /* iron studs and two hinge straps */
+    for (let r = 0; r < 6; r++) [-1, 1].forEach(c =>
+      box(.09, .09, .07, lx + c * .40, BASE + .62 + r * .38, -.27, iron));
+    box(.36, .12, .05, lx, BASE + 2.55, -.27, iron);
+    box(.36, .12, .05, lx, BASE + 1.05, -.27, iron);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(.14, .030, 8, 18), brass);
+    ring.position.set(s * .42, BASE + 1.50, -.26); ring.castShadow = true; g.add(ring);
+  });
+
+  /* --- the bells under the porch, the gate's own voice */
+  bell(0, 7.18, .90, .29);
+  bell(-2.60, 7.14, .58, .18);
+  bell(2.60, 7.14, .58, .18);
+
+  /* --- the wall ends: low slate-capped piers, no outrigger wall */
+  [-1, 1].forEach(s => {
+    box(.72, 3.20, 1.05, s * 6.15, BASE + 1.60, Z, stone);
+    box(.94, .18, 1.26, s * 6.15, BASE + 3.29, Z, slate);
+  });
+
+  /* the moon is behind the gate, so without a raking lamp in front the whole
+     entrance renders as a black rectangle. This one is cool: the night is
+     blue, and the warm light belongs to the two lamps on the door. */
+  const face = new THREE.PointLight(0xbcc9d2, 2.40, 26, 1.7);
+  face.position.set(0, 6.20, 11.0); g.add(face);
+  const lamp = new THREE.PointLight(0xffb478, 1.20, 14, 1.9);
+  lamp.position.set(0, 4.40, 1.70); g.add(lamp);
+  const sill = new THREE.PointLight(0xff9a52, .55, 6.0, 2);
+  sill.position.set(0, 2.00, 1.30); g.add(sill);
+  /* the porch lamp thrown up into the rafters, so the slate soffit reads as
+     stone slabs overhead instead of a black band */
+  const eave = new THREE.PointLight(0xffbc84, .85, 8.5, 2);
+  eave.position.set(0, 6.55, 2.60); g.add(eave);
+
+  /* the group's own origin is the court, so the plinth sits on it */
+  const GS = .62;
+  g.position.set(0, 0, -8.6); g.scale.setScalar(GS);
+  scene.add(g); WORLD.gate = g; WORLD.torii = g;
 }
+
 
 function buildLantern(x, z, s, y) {
   const stone = lib('lanternStone', () => surface(lib('granite', () => texStone(17)), [1.5, 1.5],
@@ -3259,38 +3520,39 @@ function buildLantern(x, z, s, y) {
   const dark  = lib('lanternDark', () => surface(postWood(), [.9, .9],
     { color: 0xd8c2b6, metalness: .1, normal: .7 }));
   const g = new THREE.Group();
-  const base = new THREE.Mesh(new THREE.CylinderGeometry(.44, .52, .26, 20), stone);
-  base.position.y = .13; base.castShadow = true; g.add(base);
-  const post = new THREE.Mesh(new THREE.CylinderGeometry(.15, .18, 1.02, 16), stone);
-  post.position.y = .77; post.castShadow = true; g.add(post);
-  const shelf = new THREE.Mesh(new THREE.CylinderGeometry(.42, .34, .13, 20), stone);
-  shelf.position.y = 1.34; shelf.castShadow = true; g.add(shelf);
+  const plinth = new THREE.Mesh(new THREE.BoxGeometry(.68, .10, .68), stone);
+  plinth.position.y = .05; plinth.receiveShadow = true; g.add(plinth);
+  const base = new THREE.Mesh(new THREE.BoxGeometry(.54, .22, .54), stone);
+  base.position.y = .11; base.castShadow = true; base.receiveShadow = true; g.add(base);
+  const post = new THREE.Mesh(new THREE.BoxGeometry(.24, 1.06, .24), stone);
+  post.position.y = .76; post.castShadow = true; g.add(post);
+  const collar = new THREE.Mesh(new THREE.BoxGeometry(.34, .10, .34), stone);
+  collar.position.y = 1.30; collar.castShadow = true; g.add(collar);
+  const shelf = new THREE.Mesh(new THREE.BoxGeometry(.48, .08, .48), stone);
+  shelf.position.y = 1.38; shelf.castShadow = true; g.add(shelf);
 
-  const box = new THREE.Mesh(new THREE.BoxGeometry(.50, .50, .50), dark);
+  const box = new THREE.Mesh(new THREE.BoxGeometry(.46, .48, .46), dark);
   box.position.y = 1.66; box.castShadow = true; g.add(box);
-  const paneMat = new THREE.MeshBasicMaterial({ color: hdr(2.3, .30, .085), fog: false, toneMapped: false });
-  [[0, 0, .256, 0], [0, 0, -.256, Math.PI], [.256, 0, 0, Math.PI / 2], [-.256, 0, 0, -Math.PI / 2]].forEach(p => {
-    const pane = new THREE.Mesh(new THREE.PlaneGeometry(.34, .34), paneMat);
+  const paneMat = new THREE.MeshBasicMaterial({ color: hdr(2.2, 1.05, .50), fog: false, toneMapped: false });
+  [[0, 0, .236, 0], [0, 0, -.236, Math.PI], [.236, 0, 0, Math.PI / 2], [-.236, 0, 0, -Math.PI / 2]].forEach(p => {
+    const pane = new THREE.Mesh(new THREE.PlaneGeometry(.32, .32), paneMat);
     pane.position.set(p[0], 1.66, p[2]); pane.rotation.y = p[3]; g.add(pane);
   });
   WORLD.lanternPane = WORLD.lanternPane || paneMat;
 
-  const roof = new THREE.Mesh(new THREE.CylinderGeometry(.10, .62, .34, 4, 1), stone);
-  roof.position.y = 2.06; roof.rotation.y = Math.PI / 4; roof.castShadow = true; g.add(roof);
-  const brim = new THREE.Mesh(new THREE.CylinderGeometry(.66, .70, .07, 4, 1), stone);
-  brim.position.y = 1.93; brim.rotation.y = Math.PI / 4; g.add(brim);
-  const knob = new THREE.Mesh(new THREE.SphereGeometry(.09, 12, 10), stone);
-  knob.position.y = 2.28; g.add(knob);
-  const tip = new THREE.Mesh(new THREE.ConeGeometry(.055, .16, 10), stone);
-  tip.position.y = 2.4; g.add(tip);
+  /* one slate slab over the cage, and a second course of stone above it */
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(.70, .10, .70), stone);
+  roof.position.y = 1.94; roof.castShadow = true; g.add(roof);
+  const brim = new THREE.Mesh(new THREE.BoxGeometry(.54, .09, .54), stone);
+  brim.position.y = 2.03; brim.castShadow = true; g.add(brim);
 
   const glow = new THREE.Mesh(new THREE.PlaneGeometry(3.4, 3.4),
-    new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(255,120,60,.9)', 'rgba(255,60,24,.28)')),
+    new THREE.MeshBasicMaterial({ map: tx(texGlow('rgba(255,196,128,.9)', 'rgba(255,146,64,.28)')),
       transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, fog: false, opacity: .5 }));
   glow.position.y = 1.66; glow.renderOrder = 2; g.add(glow);
   glow.userData.billboard = true;
 
-  const lt = new THREE.PointLight(0xff5a24, 2.6, 9, 2);
+  const lt = new THREE.PointLight(0xffa552, 2.3, 9, 2);
   lt.position.set(0, 1.66, 0); g.add(lt);
   WORLD.lanternLights = WORLD.lanternLights || [];
   WORLD.lanternLights.push(lt); WORLD.lanternGlows = WORLD.lanternGlows || []; WORLD.lanternGlows.push(glow);
@@ -3300,104 +3562,172 @@ function buildLantern(x, z, s, y) {
   return g;
 }
 
-function buildMaple(seed, x, z, scale) {
+function buildDeodar(seed, x, z, scale, far) {
+  /* Cedrus deodara: one straight leader carrying whorls of near-horizontal
+     boughs that droop at the tips, under a narrow conical crown of blue-green
+     sprays. Height and spread follow the engine's maple so nothing else about
+     the court moves. `far` is the ridge belt: a third of the whorls, because
+     at sixty metres only the silhouette ever resolves. */
   const rnd = mulberry32(seed);
-  const parts = [], tips = [];
+  const g = new THREE.Group();
+  const H = 8.4 + rnd() * 3.2;                 /* deodars are tall */
+  const R0 = 1.25 + rnd() * .50;               /* reach of the lowest whorl */
+
+  /* ---- the leader, in tapered segments so it can carry a slight lean ---- */
+  const parts = [];
   const M = new THREE.Matrix4(), Q = new THREE.Quaternion(), UP = new THREE.Vector3(0, 1, 0);
   const dir = new THREE.Vector3(), pos = new THREE.Vector3();
-
-  function seg(from, to, r0, r1) {
+  const SEG = 8;
+  let lx = 0, lz = 0;
+  for (let i = 0; i < SEG; i++) {
+    lx += (rnd() - .5) * .13; lz += (rnd() - .5) * .13;
+    const y0 = H * i / SEG, y1 = H * (i + 1) / SEG;
+    const from = new THREE.Vector3(lx, y0, lz), to = new THREE.Vector3(lx, y1, lz);
     dir.subVectors(to, from);
     const len = dir.length(); dir.normalize();
-    const geo = new THREE.CylinderGeometry(r1, r0, len, 6, 1, true);
+    const r0 = .28 * (1 - i / SEG * .88), r1 = .28 * (1 - (i + 1) / SEG * .88);
+    const geo = new THREE.CylinderGeometry(r1, r0, len, 7, 1, false);
     Q.setFromUnitVectors(UP, dir);
     pos.addVectors(from, to).multiplyScalar(.5);
     M.compose(pos, Q, new THREE.Vector3(1, 1, 1));
     geo.applyMatrix4(M);
     parts.push(geo);
   }
-  function branch(from, dirV, len, rad, depth) {
-    const to = from.clone().addScaledVector(dirV, len);
-    to.y += len * .10;
-    seg(from, to, rad, rad * .68);
-    if (depth >= 4 || len < .34) { tips.push(to.clone()); return; }
-    const n = depth < 2 ? 3 : 2;
-    for (let i = 0; i < n; i++) {
-      const d = dirV.clone();
-      d.x += (rnd() - .5) * 1.25; d.z += (rnd() - .5) * 1.25; d.y += .30 + rnd() * .5;
-      d.normalize();
-      branch(to, d, len * (.62 + rnd() * .16), rad * .66, depth + 1);
-    }
-  }
-  const root = new THREE.Vector3(0, 0, 0);
-  seg(root, new THREE.Vector3(0, 1.5, 0), .22, .16);
-  for (let i = 0; i < 4; i++) {
-    const a = i / 4 * TAU + rnd();
-    branch(new THREE.Vector3(0, 1.5, 0), new THREE.Vector3(Math.cos(a) * .8, .8, Math.sin(a) * .8).normalize(), 1.45, .155, 0);
-  }
   const trunk = new THREE.Mesh(mergeGeos(parts),
-    new THREE.MeshStandardMaterial({ color: 0x171413, roughness: .94, metalness: .0, side: THREE.DoubleSide }));
-  trunk.castShadow = true;
+    new THREE.MeshStandardMaterial({ color: 0x191410, roughness: .95, metalness: 0 }));
+  trunk.castShadow = true; trunk.receiveShadow = true; g.add(trunk);
 
-  const leafGeo = new THREE.PlaneGeometry(.36, .36);
-  const leafMat = new THREE.MeshStandardMaterial({
-    map: tx(texLeaf()), color: 0x24331a, alphaTest: .42, side: THREE.DoubleSide,
-    roughness: .86, metalness: 0, emissive: 0x030703, emissiveIntensity: .12
-  });
-  const per = LOW ? 5 : 9;
-  const inst = new THREE.InstancedMesh(leafGeo, leafMat, tips.length * per);
-  const m4 = new THREE.Matrix4(), e = new THREE.Euler(), q2 = new THREE.Quaternion(), sc = new THREE.Vector3();
-  let k = 0;
-  tips.forEach(t => {
-    for (let i = 0; i < per; i++) {
-      const p = new THREE.Vector3(t.x + (rnd() - .5) * .95, t.y + (rnd() - .5) * .8, t.z + (rnd() - .5) * .95);
-      e.set(rnd() * TAU, rnd() * TAU, rnd() * TAU);
-      q2.setFromEuler(e);
-      const s = .7 + rnd() * .75; sc.set(s, s, s);
-      m4.compose(p, q2, sc);
-      inst.setMatrixAt(k++, m4);
+  /* ---- the sprays: two crossed planes per bough ---- */
+  const frond = new THREE.PlaneGeometry(1.9, 1.35, 1, 1);
+  frond.translate(.95, 0, 0);            /* rooted at the bough, not its middle */
+  /* the sprays are cut from the same deodar specimen as the page's foreground
+     tree, so the 3-D wood and the flat cut-out are the same species */
+  if (!WORLD.deodarSpray) {
+    WORLD.deodarSpray = new THREE.TextureLoader().load('assets/kage/fg/deodar-spray.webp');
+    WORLD.deodarSpray.encoding = THREE.sRGBEncoding;
+    WORLD.deodarSpray.anisotropy = Math.min(8, maxAniso);
+  }
+  /* one leaf material for the whole hillside: the canopy is now twenty trees
+     deep, and a material per tree meant twenty copies of the same shader */
+  if (!WORLD.deodarMats) {
+    const spray = (col, emit) => new THREE.MeshStandardMaterial({
+      map: WORLD.deodarSpray, color: col, alphaTest: .30,
+      side: THREE.DoubleSide, roughness: .84, metalness: 0,
+      emissive: emit, emissiveIntensity: .12
+    });
+    /* deodar green, not the pale blue the specimen was keyed against; the far
+       wood runs a shade colder so the ridge sits behind the court */
+    WORLD.deodarMats = { near: spray(0x6a785f, 0x020403), far: spray(0x4d5d54, 0x010202) };
+  }
+  const needle = far ? WORLD.deodarMats.far : WORLD.deodarMats.near;
+  const TIER = far ? (LOW ? 4 : 6) : (LOW ? 10 : 14);
+  const sprays = [];
+  for (let t = 0; t < TIER; t++) {
+    const u = t / (TIER - 1);                    /* 0 lowest whorl, 1 the tip */
+    const y = .26 * H + u * .66 * H;
+    const r = R0 * Math.pow(1 - u, .72) + .16;
+    const n = Math.max(4, Math.round(9 - u * 5));
+    for (let k = 0; k < n; k++) {
+      const a = (k / n) * TAU + t * .55 + rnd() * .22;
+      const rr = r * (.84 + rnd() * .24);
+      sprays.push({
+        px: lx * u + Math.cos(a) * rr, py: y + (rnd() - .5) * .18, pz: lz * u + Math.sin(a) * rr,
+        a: a, droop: -.12 - rnd() * .22,
+        s: (.92 + .46 * (1 - u)) * (.85 + rnd() * .3)
+      });
     }
+  }
+  for (let k = 0; k < (far ? 2 : 4); k++) {
+    const a = k / (far ? 2 : 4) * TAU + .6;
+    sprays.push({ px: lx + Math.cos(a) * .14, py: H * .965, pz: lz + Math.sin(a) * .14,
+                  a: a, droop: -.04, s: .36 });
+  }
+
+  const inst = new THREE.InstancedMesh(frond, needle, sprays.length * 2);
+  const dummy = new THREE.Object3D();
+  const qYaw = new THREE.Quaternion(), qDroop = new THREE.Quaternion(), qRoll = new THREE.Quaternion();
+  const YAW = new THREE.Vector3(0, 1, 0), PITCH = new THREE.Vector3(0, 0, 1), ROLL = new THREE.Vector3(1, 0, 0);
+  let vi = 0;
+  sprays.forEach(o => {
+    [-1, 1].forEach(face => {
+      qYaw.setFromAxisAngle(YAW, -o.a);
+      qDroop.setFromAxisAngle(PITCH, o.droop);
+      qRoll.setFromAxisAngle(ROLL, face * Math.PI * .5 + (rnd() - .5) * .20);
+      dummy.position.set(o.px, o.py, o.pz);
+      dummy.quaternion.copy(qYaw).multiply(qDroop).multiply(qRoll);
+      dummy.scale.set(o.s, o.s, o.s);
+      dummy.updateMatrix();
+      inst.setMatrixAt(vi++, dummy.matrix);
+    });
   });
   inst.instanceMatrix.needsUpdate = true;
-  inst.castShadow = false; inst.frustumCulled = false;
+  inst.frustumCulled = false;
+  g.add(inst);
 
-  const g = new THREE.Group();
-  g.add(trunk); g.add(inst);
-  g.position.set(x, 0, z); g.scale.setScalar(scale || 1);
+  g.position.set(x, 0, z);
+  g.scale.setScalar(scale || 1);
   g.rotation.y = rnd() * TAU;
   scene.add(g);
-  /* leaves breathe in the wind */
-  leafMat.onBeforeCompile = sh => {
+  WORLD.deodars = WORLD.deodars || [];
+  WORLD.deodars.push(g);
+
+  /* the sprays move in the wind, a beat behind the grass */
+  needle.onBeforeCompile = sh => {
     sh.uniforms.uT = WORLD.uT;
     sh.vertexShader = 'uniform float uT;\n' + sh.vertexShader.replace('#include <begin_vertex>',
       '#include <begin_vertex>\n' +
       'vec3 wp = (instanceMatrix * vec4(0.0,0.0,0.0,1.0)).xyz;\n' +
-      'float ph = wp.x*1.7 + wp.z*1.3 + wp.y*.7;\n' +
-      'transformed.x += sin(uT*1.35 + ph)*0.055;\n' +
-      'transformed.z += cos(uT*1.05 + ph*1.3)*0.045;\n');
+      'float ph = wp.x*1.4 + wp.z*1.1 + wp.y*.55;\n' +
+      'transformed.y += sin(uT*.9 + ph)*.035;\n' +
+      'transformed.x += sin(uT*.7 + ph*1.4)*.045;\n');
   };
   return g;
 }
 
 function buildRocks() {
-  const mat = new THREE.MeshStandardMaterial({ color: 0x141a1c, roughness: .46, metalness: .10 });
+  /* Himachal roadsides are banked with split slate, not smooth wet granite:
+     flat beds prised out of the mountain and stacked, the top slab canted.
+     Each engine position becomes a small pile so the silhouette gains the
+     stepped, layered profile one icosahedron never had. */
+  const stone = new THREE.MeshStandardMaterial({
+    color: 0x3c474e, roughness: .89, metalness: .03, flatShading: true
+  });
+  const moss = new THREE.MeshStandardMaterial({
+    color: 0x2c3a26, roughness: .98, metalness: 0, flatShading: true
+  });
   const rnd = mulberry32(404), n = noise2D(88);
   const spots = [[-6.2, -5.4, .95], [-7.4, -2.1, .7], [6.6, -7.2, .8], [8.0, -4.0, 1.05],
                  [-9.0, -8.4, 1.15], [9.6, -9.2, .9], [3.4, -7.8, .55], [-3.2, -8.6, .6]];
   spots.forEach((s, i) => {
-    const geo = new THREE.IcosahedronGeometry(s[2], 2);
-    const p = geo.attributes.position;
-    for (let v = 0; v < p.count; v++) {
-      const vx = p.getX(v), vy = p.getY(v), vz = p.getZ(v);
-      const d = 1 + .34 * fbm(n, vx * 1.6 + i * 7, vz * 1.6 + vy, 3, 2.2, .5);
-      p.setXYZ(v, vx * d, vy * d * .68, vz * d);
+    const g = new THREE.Group();
+    const slabs = 2 + (rnd() * 3 | 0);
+    for (let k = 0; k < slabs; k++) {
+      const sc = s[2] * (1 - k * .15);
+      const geo = new THREE.IcosahedronGeometry(sc * (.85 + rnd() * .4), 1);
+      const p = geo.attributes.position;
+      for (let v = 0; v < p.count; v++) {
+        const vx = p.getX(v), vy = p.getY(v), vz = p.getZ(v);
+        const d = 1 + .18 * fbm(n, vx * 2.2 + i * 7 + k * 3, vz * 2.2 + vy, 3, 2.2, .5);
+        p.setXYZ(v, vx * d * 1.15, vy * d * .46, vz * d);
+      }
+      geo.computeVertexNormals();
+      const m = new THREE.Mesh(geo, stone);
+      m.position.set((rnd() - .5) * s[2], s[2] * .18 + k * s[2] * .36, (rnd() - .5) * s[2] * .8);
+      m.rotation.set((rnd() - .5) * .2, rnd() * TAU, (rnd() - .5) * .16);
+      m.castShadow = true; m.receiveShadow = true;
+      g.add(m);
     }
-    geo.computeVertexNormals();
-    const m = new THREE.Mesh(geo, mat);
-    m.position.set(s[0], s[2] * .30, s[1]);
-    m.rotation.set(rnd(), rnd() * TAU, rnd() * .4);
-    m.castShadow = true; m.receiveShadow = true;
-    scene.add(m);
+    /* a little moss bedded on the top slab */
+    if (rnd() > .45) {
+      const cap = new THREE.Mesh(new THREE.SphereGeometry(s[2] * (.18 + rnd() * .14), 8, 5), moss);
+      cap.scale.y = .38;
+      cap.position.set((rnd() - .5) * s[2] * .5, s[2] * (.1 + slabs * .36), (rnd() - .5) * s[2] * .4);
+      cap.castShadow = true;
+      g.add(cap);
+    }
+    g.position.set(s[0], 0, s[1]);
+    g.rotation.y = rnd() * TAU;
+    scene.add(g);
   });
 }
 
@@ -4775,7 +5105,7 @@ function wireHeroExit() {
 function wireNav() {
   let last = 0;
   const rail = $('#rail');
-  const names = ['The Hidden Gate', 'The Sanmon', 'Still Gardens', 'Sacred Craft', 'Afterlight', 'Colophon'];
+  const names = ['The Hidden Gate', 'The Dwara', 'Still Gardens', 'Sacred Craft', 'Afterlight', 'Colophon'];
   SECS.forEach((s, i) => {
     const b = document.createElement('button');
     b.innerHTML = '<i></i>'; b.title = names[i] || '';
@@ -5170,10 +5500,23 @@ const JOBS = [
       buildLantern(-cheekX(z), z, sc, cheekTop(z));
     });
   }],
-  ['Growing the maples', () => {
-    buildMaple(71, 12.6, -13.0, 1.05); buildMaple(72, -11.8, -9.4, .95);
-    buildMaple(73, 9.2, -19.0, .82);   buildMaple(74, -14.5, -17.5, 1.0);
-    buildMaple(75, 16.5, -6.0, .88);
+  ['Growing the deodar', () => {
+    buildDeodar(71, 12.6, -13.0, .84); buildDeodar(72, -11.8, -9.4, .76);
+    buildDeodar(73, 9.2, -19.0, .66);   buildDeodar(74, -14.5, -17.5, .80);
+    buildDeodar(75, 16.5, -6.0, .70);
+
+    /* The court five are the engine's own placements. Around them, the
+       hillside the photographs show: a wood on either flank of the flight,
+       and the belt that closes the ridge behind the tower. */
+    const flank = [[76, 18.4, -26.0, .92], [77, -19.2, -28.0, .88],
+                   [78, 22.0, -37.0, 1.02], [79, -22.6, -39.5, .96],
+                   [80, 20.6, -48.0, 1.08], [81, -21.4, -50.0, 1.02],
+                   [82, 17.6, -8.0, .74], [83, -17.9, -12.5, .72]];
+    const belt = [[84, -30, -59, 1.30], [85, -20, -64, 1.22], [86, -10, -68, 1.34],
+                  [87, 0, -71, 1.26], [88, 10, -67, 1.36], [89, 20, -63, 1.24],
+                  [90, 30, -58, 1.32], [91, -39, -55, 1.18], [92, 39, -54, 1.20]];
+    flank.forEach(t => buildDeodar(t[0], t[1], t[2], t[3]));
+    belt.forEach(t => buildDeodar(t[0], t[1], t[2], t[3], true));
   }],
   ['Painting the near grass', () => buildForeground()],
   ['Cutting the word', () => buildWordmark()],
