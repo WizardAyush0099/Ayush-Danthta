@@ -905,14 +905,40 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 /* The photographs are files, not renders: they arrive brighter than the scene
    they hang in, so the live windows take a light wash of the page ink. */
 .peek-fr, .card-fr{ box-shadow:inset 0 0 0 999px rgba(4,7,10,.22); }
-.portrait-band > img{
-  width:min(100%,400px); height:auto; justify-self:end;
-  filter:drop-shadow(0 28px 54px rgba(3,6,8,.78));
+.portrait-band > .pt{
+  position:relative; display:block; justify-self:end; width:min(100%,400px);
+  transform:perspective(1050px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))
+            translate3d(var(--tx,0px),var(--ty,0px),0);
+  transition:transform .55s var(--ease-out); will-change:transform;
+}
+.pt img{ display:block; width:100%; height:auto; user-select:none; -webkit-user-drag:none; }
+/* the print as it hangs in the dark room */
+.pt-base{
+  filter:drop-shadow(0 30px 58px rgba(3,6,8,.80)) saturate(.80) brightness(.80) contrast(1.06);
   /* the cut-out ends at the waist: fade the last band so the crop reads as the
      scene taking over rather than as a photograph sliced off */
   -webkit-mask-image:linear-gradient(#000 80%, transparent 99%);
           mask-image:linear-gradient(#000 80%, transparent 99%);
 }
+/* the same print, one stop brighter, seen through the lantern mask */
+.pt-lit{
+  position:absolute; inset:0; pointer-events:none;
+  -webkit-mask-image:linear-gradient(#000 80%, transparent 99%);
+          mask-image:linear-gradient(#000 80%, transparent 99%);
+}
+.pt-lit img{
+  filter:drop-shadow(0 26px 50px rgba(3,6,8,.45)) saturate(1.06) brightness(1.11) contrast(1.03);
+  -webkit-mask-image:radial-gradient(circle 180px at var(--px,50%) var(--py,36%), #000 0 30%, rgba(0,0,0,.62) 58%, transparent 78%);
+          mask-image:radial-gradient(circle 180px at var(--px,50%) var(--py,36%), #000 0 30%, rgba(0,0,0,.62) 58%, transparent 78%);
+}
+.pt-ring{
+  position:absolute; left:var(--px,50%); top:var(--py,36%); width:76px; height:76px;
+  margin:-38px 0 0 -38px; border:1px solid rgba(255,224,186,.40); border-radius:50%;
+  box-shadow:inset 0 0 34px rgba(255,178,110,.13); pointer-events:none; opacity:0;
+  transition:opacity .4s var(--ease), width .4s var(--ease), height .4s var(--ease);
+}
+.pt:hover .pt-ring{ opacity:1; }
+.pt.touch .pt-ring{ display:none; }
 /* Chapter 02's near plane is the one place the cut-outs would stand in front of
    a paragraph rather than the frame: the pine goes, the grass drops below the
    last line of copy. */
@@ -920,11 +946,12 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 [data-fg="gate"] .fg-grass{ left:-10%; bottom:-250px; width:clamp(380px,52vw,900px); }
 @media (max-width:1080px){
   .portrait-band{ grid-template-columns:minmax(0,1fr) minmax(0,.9fr); }
-  .portrait-band > img{ width:min(100%,330px); }
+  .portrait-band > .pt{ width:min(100%,330px); }
 }
 @media (max-width:820px){
   .portrait-band{ grid-template-columns:1fr; gap:14px; margin-bottom:clamp(28px,5vh,48px); }
-  .portrait-band > img{ justify-self:start; order:-1; width:min(72vw,300px); }
+  .portrait-band > .pt{ justify-self:start; order:-1; width:min(72vw,300px); }
+  .pt-ring{ display:none; }
   .portrait-band figcaption{ padding-bottom:0; }
 }
 
@@ -981,6 +1008,45 @@ body[data-layout-closing="b"] .fin .field-notes{
   .field-notes figure:first-child{ grid-column:1 / -1; }
   .field-notes figure:first-child .fn-fr{ aspect-ratio:16/10; }
   .field-notes figcaption span{ display:none; }
+}
+
+/* ====================================================== account control
+   Signed out: one quiet word in the nav. Signed in: the avatar. The Admin
+   link appears only when Clerk reports the verified owner address. */
+.nav-auth{
+  display:flex; align-items:center; gap:clamp(8px,1.2vw,16px);
+  margin-left:clamp(10px,1.6vw,24px); flex:0 0 auto;
+}
+.nav-auth [hidden]{ display:none !important; }
+.nav-signin, .nav-user{
+  appearance:none; font:inherit; color:var(--bone); background:transparent;
+  border:1px solid rgba(223,231,224,.26); border-radius:2px; padding:9px 13px;
+  font-size:9.5px; font-weight:500; letter-spacing:.24em; text-transform:uppercase;
+  display:inline-flex; align-items:center; gap:9px; cursor:pointer;
+  transition:border-color .35s var(--ease), background .35s var(--ease), opacity .3s;
+}
+.nav-signin:hover, .nav-user:hover{ border-color:rgba(223,231,224,.66); background:rgba(223,231,224,.06); }
+.nav-signin[disabled]{ opacity:.5; }
+.nav-user{ padding:4px 10px 4px 4px; }
+.nav-user img{ width:27px; height:27px; border-radius:50%; display:block; background:#182025; object-fit:cover; }
+.nav-user b{ font-weight:500; font-size:11px; letter-spacing:.08em; text-transform:none; }
+.nav-admin{
+  font-size:9.5px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+  color:#e9b48a; text-decoration:none; border-bottom:1px solid rgba(233,180,138,.45);
+  padding-bottom:3px; transition:color .3s, border-color .3s;
+}
+.nav-admin:hover{ color:#ffd2ab; border-color:#ffd2ab; }
+@media (max-width:1080px){ .nav-user b{ display:none; } .nav-admin{ display:none; } }
+@media (max-width:560px){ .nav-auth{ margin-left:6px; } .nav-signin{ padding:8px 9px; font-size:9px; letter-spacing:.14em; } }
+
+/* The mist behind the hero's chapter list is brighter than the type sitting
+   on it. A shadow buys the numerals their contrast without laying a scrim
+   over the live scene. */
+.hero .chip .num, .hero .chip .tx b, .hero .chip .tx p{ text-shadow:0 2px 20px rgba(3,6,8,.88); }
+.chapters{ position:relative; }
+.chapters::before{
+  content:''; position:absolute; z-index:-1; inset:-20px -8% -18px -10%; pointer-events:none;
+  background:radial-gradient(120% 105% at 42% 100%, rgba(4,7,10,.74), rgba(4,7,10,.32) 54%, transparent 80%);
 }
 </style>
 </head>
@@ -1048,6 +1114,13 @@ body[data-layout-closing="b"] .fin .field-notes{
     <a class="nav-link" href="#lessons" data-cursor><span>Forest</span><span class="alt">Deodar</span></a>
     <a class="nav-link" href="#eternity" data-cursor><span>Arrival</span><span class="alt">Ridge</span></a>
   </nav>
+  <div class="nav-auth" id="navAuth">
+    <button class="nav-signin" id="clerkSignIn" type="button" data-cursor>Sign in</button>
+    <a class="nav-admin" id="clerkAdmin" href="admin.html" hidden data-cursor>Admin</a>
+    <button class="nav-user" id="clerkUser" type="button" hidden data-cursor aria-label="Account">
+      <img id="clerkAvatar" alt="" width="27" height="27" decoding="async"><b id="clerkName"></b>
+    </button>
+  </div>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
 </header>
 
@@ -1118,8 +1191,19 @@ body[data-layout-closing="b"] .fin .field-notes{
       <p class="body">Designer, developer and motion. Interfaces, 3D, and the quiet
         mechanics of attention.</p>
     </figcaption>
-    <img src="assets/img/portrait-cutout@800.webp" alt="Portrait of Ayush Danthta"
-         width="900" height="1200" loading="lazy" decoding="async">
+    <span class="pt" id="pt" data-cursor>
+      <img class="pt-base" src="assets/img/portrait-cutout@800.webp"
+           srcset="assets/img/portrait-cutout@800.webp 664w, assets/img/portrait-cutout.webp 1122w"
+           sizes="(max-width:820px) 72vw, 400px"
+           width="664" height="800" alt="Portrait of Ayush Danthta" loading="lazy" decoding="async">
+      <span class="pt-lit" aria-hidden="true">
+        <img src="assets/img/portrait-cutout@800.webp"
+             srcset="assets/img/portrait-cutout@800.webp 664w, assets/img/portrait-cutout.webp 1122w"
+             sizes="(max-width:820px) 72vw, 400px" width="664" height="800" alt=""
+             loading="lazy" decoding="async">
+      </span>
+      <i class="pt-ring" aria-hidden="true"></i>
+    </span>
   </figure>
   <div class="gate-grid">
     <h2 class="display h-sec" data-rv="up">Thin air, long shadows, a room that breathes.</h2>
@@ -3135,6 +3219,124 @@ function buildTempleHimachal() {
     });
   });
 
+  /* ---------------------------------------------------------- joinery ----
+     What a Bhimakali tower carries that five boxes do not: a coursed plinth,
+     a balustrade round the terrace, a cantilevered jharokha with its own pent,
+     brass bells under the low eaves, a door tympanum, rails along both wings,
+     and prayer flags strung off the veranda. All of it merges below. */
+
+  /* 1 — the plinth is coursed slate, not one white block */
+  for (let c = 0; c < 3; c++)
+    slateG.push(new THREE.BoxGeometry(33.42, .13, 17.72).translate(0, F + .32 + c * .40, TZ + .6));
+
+  /* 2 — the terrace balustrade: turned posts, slate caps, on the side and
+        back edges (the front already carries the flight's parapets) */
+  for (let z = TZ - 7.7; z <= TZ + 8.6; z += 1.02) {
+    [-1, 1].forEach(sx => {
+      whiteG.push(new THREE.CylinderGeometry(.065, .09, .58, 7).translate(sx * 16.3, F + 1.99, z));
+      slateG.push(new THREE.BoxGeometry(.26, .075, .26).translate(sx * 16.3, F + 2.31, z));
+    });
+  }
+  for (let x = -15.2; x <= 15.2; x += 1.02) {
+    whiteG.push(new THREE.CylinderGeometry(.065, .09, .58, 7).translate(x, F + 1.99, TZ - 7.95));
+    slateG.push(new THREE.BoxGeometry(.26, .075, .26).translate(x, F + 2.31, TZ - 7.95));
+  }
+
+  /* 3 — the jharokha: a deodar balcony thrown out of the fourth storey, its
+        front a lit jali, a little pent over it and two brass spikes */
+  /* tier 3 begins at baseY + 9.887; the balcony hangs just under its pent */
+  const jy = baseY + 10.30, jz = TZ + 3.50, jd = .95;
+  slateG.push(new THREE.BoxGeometry(3.0, .14, jd + .22).translate(0, jy, jz + jd / 2));
+  [-1, 1].forEach(sx => {
+    woodG.push(new THREE.BoxGeometry(.16, 1.16, jd).translate(sx * 1.42, jy + .64, jz + jd / 2));
+    woodG.push(new THREE.BoxGeometry(.34, .16, jd + .10).translate(sx * 1.42, jy + 1.26, jz + jd / 2));
+    brassG.push(new THREE.ConeGeometry(.05, .40, 5).translate(sx * 1.50, jy + 1.55, jz + jd * .72));
+  });
+  woodG.push(new THREE.BoxGeometry(2.96, .16, jd).translate(0, jy + 1.20, jz + jd / 2));
+  glowG.push(new THREE.PlaneGeometry(2.42, .96).translate(0, jy + .68, jz + .04));
+  jaliG.push(new THREE.PlaneGeometry(2.42, .96).translate(0, jy + .68, jz + .10));
+  const jroof = new THREE.Mesh(roofGeo(1.92, .78, 0, .40, .16, .02), slate);
+  jroof.position.set(0, jy + 1.32, jz + jd / 2); jroof.castShadow = true; g.add(jroof);
+
+  /* 4 — a brass bell at each corner of the two lowest pents */
+  [0, 1].forEach(i => {
+    const w = TIERS[i][0], ov = TIERS[i][2];
+    const ey = (i === 0 ? baseY + TIERS[0][1] : baseY + TIERS[0][1] + .5456 + TIERS[1][1]) - .10;
+    const rim = w / 2 + ov - .12;
+    [-1, 1].forEach(sx => [-1, 1].forEach(sz => {
+      brassG.push(new THREE.CylinderGeometry(.012, .012, .30, 4).translate(sx * rim, ey - .15, TZ + sz * rim));
+      brassG.push(new THREE.ConeGeometry(.075, .20, 7).translate(sx * rim, ey - .38, TZ + sz * rim));
+    }));
+  });
+
+  /* 5 — the door's tympanum: a brass disc in a ring over the lintel */
+  brassG.push(new THREE.TorusGeometry(.30, .028, 6, 18).translate(0, dY + dH + .56, dZ + .14));
+  brassG.push(new THREE.SphereGeometry(.13, 10, 8).translate(0, dY + dH + .56, dZ + .14));
+
+  /* 6 — a rail along each wing, so the long halls read as inhabited */
+  [-1, 1].forEach(s => {
+    const cx = s * 10.9, cz = TZ + 2.1, wy = F + 1.7;
+    const railY = wy + 1.18, rz = cz + 2.72;
+    woodG.push(new THREE.BoxGeometry(10.4, .10, .14).translate(cx, railY, rz));
+    for (let k = 0; k <= 10; k++)
+      whiteG.push(new THREE.CylinderGeometry(.05, .07, .70, 6).translate(cx - 5.2 + k * 1.04, railY - .42, rz));
+  });
+
+  /* 7 — prayer flags from the veranda to two short poles. One mesh a colour:
+        the one thing up here that is neither stone, slate nor brass. */
+  const flagCols = [0xc0392b, 0xd9a326, 0xe8e4d8, 0x2f7d4f, 0x2c5f92];
+  const flagUp = new THREE.Vector3(0, 1, 0), flagQ = new THREE.Quaternion();
+  const flagDir = new THREE.Vector3(), flagMid = new THREE.Vector3();
+  flagCols.forEach((col, ci) => {
+    const parts = [];
+    [-1, 1].forEach(s => {
+      const ax = s * 3.02, ay = vTop - .40, az = dZ + 1.9;
+      const bx = s * 7.1, by = F + 3.30, bz = dZ + 2.9;
+      const at = t => new THREE.Vector3(
+        ax + (bx - ax) * t,
+        ay + (by - ay) * t - Math.sin(Math.PI * t) * .50,
+        az + (bz - az) * t
+      );
+      for (let k = 0; k < 7; k++) {
+        const t = (k + .5) / 7, p = at(t), w = .30, hgt = .44;
+        const q = new THREE.BufferGeometry();
+        q.setAttribute('position', new THREE.BufferAttribute(new Float32Array([
+          -w / 2, 0, 0, w / 2, 0, 0, 0, -hgt, .03
+        ]), 3));
+        q.setAttribute('normal', new THREE.BufferAttribute(new Float32Array([
+          0, 0, 1, 0, 0, 1, 0, 0, 1
+        ]), 3));
+        q.setAttribute('uv', new THREE.BufferAttribute(new Float32Array([0, 1, 1, 1, .5, 0]), 2));
+        q.setIndex([0, 1, 2]);
+        q.translate(p.x, p.y, p.z);
+        parts.push(q);
+      }
+      /* the cord: six thin segments following the same catenary */
+      for (let k = 0; k < 6; k++) {
+        const p0 = at(k / 7), p1 = at((k + 1) / 7);
+        flagDir.subVectors(p1, p0);
+        const len = flagDir.length();
+        if (len < 1e-4) continue;
+        flagDir.normalize();
+        flagQ.setFromUnitVectors(flagUp, flagDir);
+        flagMid.addVectors(p0, p1).multiplyScalar(.5);
+        const seg = new THREE.CylinderGeometry(.014, .014, len, 4);
+        seg.applyQuaternion(flagQ);
+        seg.translate(flagMid.x, flagMid.y, flagMid.z);
+        parts.push(seg);
+      }
+    });
+    const flags = new THREE.Mesh(mergeGeos(parts), new THREE.MeshBasicMaterial({
+      color: col, side: THREE.DoubleSide, fog: true
+    }));
+    flags.renderOrder = 2; g.add(flags);
+  });
+  /* the two poles those lines are tied to */
+  [-1, 1].forEach(s => {
+    const p = new THREE.Mesh(new THREE.CylinderGeometry(.055, .075, 1.95, 6), post);
+    p.position.set(s * 7.1, F + 2.72, dZ + 2.9); p.castShadow = true; g.add(p);
+  });
+
   mergeInto(woodG, post, true);
   mergeInto(beamG, beam, true);
   mergeInto(slateG, slate, false);
@@ -3610,14 +3812,20 @@ function buildDeodar(seed, x, z, scale, far) {
   /* one leaf material for the whole hillside: the canopy is now twenty trees
      deep, and a material per tree meant twenty copies of the same shader */
   if (!WORLD.deodarMats) {
-    const spray = (col, emit) => new THREE.MeshStandardMaterial({
+    const spray = (col, emit, fogOn, glow) => new THREE.MeshStandardMaterial({
       map: WORLD.deodarSpray, color: col, alphaTest: .30,
       side: THREE.DoubleSide, roughness: .84, metalness: 0,
-      emissive: emit, emissiveIntensity: .12
+      emissive: emit, emissiveIntensity: glow, fog: fogOn
     });
-    /* deodar green, not the pale blue the specimen was keyed against; the far
-       wood runs a shade colder so the ridge sits behind the court */
-    WORLD.deodarMats = { near: spray(0x6a785f, 0x020403), far: spray(0x4d5d54, 0x010202) };
+    /* Deodar green, not the pale blue the specimen was keyed against. The
+       belt is deliberately fog-exempt: at seventy metres FogExp2 returned it
+       at three-quarters of the fog colour, which is why the one stand the
+       camera looks at arrived as empty haze. Held dark, it reads as the
+       treeline the temple stands against. */
+    WORLD.deodarMats = {
+      near: spray(0x55644c, 0x080f0a, true, .20),
+      far:  spray(0x26332c, 0x050a07, false, .14)
+    };
   }
   const needle = far ? WORLD.deodarMats.far : WORLD.deodarMats.near;
   const TIER = far ? (LOW ? 4 : 6) : (LOW ? 10 : 14);
@@ -3652,7 +3860,9 @@ function buildDeodar(seed, x, z, scale, far) {
     [-1, 1].forEach(face => {
       qYaw.setFromAxisAngle(YAW, -o.a);
       qDroop.setFromAxisAngle(PITCH, o.droop);
-      qRoll.setFromAxisAngle(ROLL, face * Math.PI * .5 + (rnd() - .5) * .20);
+      /* a wider roll lets the sprays cross the whorl instead of all standing
+         vertically, which is what gave the crown its ladder-of-slats look */
+      qRoll.setFromAxisAngle(ROLL, face * Math.PI * .5 + (rnd() - .5) * .95);
       dummy.position.set(o.px, o.py, o.pz);
       dummy.quaternion.copy(qYaw).multiply(qDroop).multiply(qRoll);
       dummy.scale.set(o.s, o.s, o.s);
@@ -5505,18 +5715,33 @@ const JOBS = [
     buildDeodar(73, 9.2, -19.0, .66);   buildDeodar(74, -14.5, -17.5, .80);
     buildDeodar(75, 16.5, -6.0, .70);
 
-    /* The court five are the engine's own placements. Around them, the
-       hillside the photographs show: a wood on either flank of the flight,
-       and the belt that closes the ridge behind the tower. */
-    const flank = [[76, 18.4, -26.0, .92], [77, -19.2, -28.0, .88],
-                   [78, 22.0, -37.0, 1.02], [79, -22.6, -39.5, .96],
-                   [80, 20.6, -48.0, 1.08], [81, -21.4, -50.0, 1.02],
-                   [82, 17.6, -8.0, .74], [83, -17.9, -12.5, .72]];
-    const belt = [[84, -30, -59, 1.30], [85, -20, -64, 1.22], [86, -10, -68, 1.34],
-                  [87, 0, -71, 1.26], [88, 10, -67, 1.36], [89, 20, -63, 1.24],
-                  [90, 30, -58, 1.32], [91, -39, -55, 1.18], [92, 39, -54, 1.20]];
-    flank.forEach(t => buildDeodar(t[0], t[1], t[2], t[3]));
+    /* The court five are the engine's own placements. The rows below stand
+       where the camera actually looks — inside the hero frame, clear of the
+       stair cheeks (|x| > 5) and on the flat floor at y=0. */
+    const grove = [[93, 8.7, -11.0, .88], [94, -8.4, -13.6, .84],
+                   [95, 9.3, -17.4, .96], [96, -8.8, -20.0, .90],
+                   [97, 10.6, -24.4, 1.04], [98, -10.0, -28.0, .98],
+                   [99, 12.4, -32.2, 1.10], [100, -11.8, -35.6, 1.04],
+                   [101, 5.9, -38.4, .74], [102, -6.2, -40.8, .78]];
+    /* the ridge belt, pulled in from -59…-71 where fog ate it alive */
+    const belt = [[84, -26, -49, 1.22], [85, -17, -52, 1.16], [86, -8, -54, 1.24],
+                  [87, 0, -55, 1.18], [88, 8, -53, 1.26], [89, 17, -51, 1.14],
+                  [90, 26, -48, 1.22], [91, -34, -46, 1.10], [92, 34, -45, 1.12]];
+    grove.forEach(t => buildDeodar(t[0], t[1], t[2], t[3]));
     belt.forEach(t => buildDeodar(t[0], t[1], t[2], t[3], true));
+
+    /* the litter of a deodar wood: two fallen leaders and a stump, so the
+       floor under the new trees is not a lawn */
+    const bark = new THREE.MeshStandardMaterial({ color: 0x2a211a, roughness: .96 });
+    [[3.9, -13.2, .55, 4.2], [-4.4, -21.0, -.8, 3.4]].forEach(l => {
+      const log = new THREE.Mesh(new THREE.CylinderGeometry(.25, .31, l[3], 8), bark);
+      log.rotation.set(Math.PI / 2, 0, l[2]);
+      log.position.set(l[0], .29, l[1]);
+      log.castShadow = true; log.receiveShadow = true; scene.add(log);
+    });
+    const stump = new THREE.Mesh(new THREE.CylinderGeometry(.34, .44, .55, 8), bark);
+    stump.position.set(-6.1, .27, -6.4); stump.castShadow = true;
+    scene.add(stump);
   }],
   ['Painting the near grass', () => buildForeground()],
   ['Cutting the word', () => buildWordmark()],
@@ -5606,5 +5831,39 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 else addEventListener('DOMContentLoaded', boot);
 })();
 </script>
+<script>
+/* The lantern over the portrait: pointer position feeds the mask, and a small
+   counter-rotation gives the print a physical edge. Coarse pointers and
+   reduced-motion readers keep the still photograph. */
+(function () {
+  var pt = document.getElementById('pt');
+  if (!pt) return;
+  var fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  if (!fine) pt.classList.add('touch');
+  function move(e) {
+    var r = pt.getBoundingClientRect();
+    if (!r.width) return;
+    var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    pt.style.setProperty('--px', (x * 100).toFixed(1) + '%');
+    pt.style.setProperty('--py', (y * 100).toFixed(1) + '%');
+    if (!fine || reduce) return;
+    pt.style.setProperty('--ry', ((x - .5) * 9).toFixed(2) + 'deg');
+    pt.style.setProperty('--rx', ((.5 - y) * 7).toFixed(2) + 'deg');
+    pt.style.setProperty('--tx', ((x - .5) * 9).toFixed(1) + 'px');
+    pt.style.setProperty('--ty', ((y - .5) * 6).toFixed(1) + 'px');
+  }
+  function rest() {
+    pt.style.setProperty('--ry', '0deg'); pt.style.setProperty('--rx', '0deg');
+    pt.style.setProperty('--tx', '0px'); pt.style.setProperty('--ty', '0px');
+    pt.style.setProperty('--px', '50%'); pt.style.setProperty('--py', '36%');
+  }
+  pt.addEventListener('pointermove', move, { passive: true });
+  pt.addEventListener('pointerleave', rest);
+})();
+</script>
+<script src="assets/kage/clerk-key.js" defer></script>
+<script src="assets/kage/clerk-boot.js" defer></script>
+<script src="assets/kage/auth.js" defer></script>
 </body>
 </html>

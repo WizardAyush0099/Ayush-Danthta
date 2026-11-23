@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Ayush Danthta</title>
+<meta name="theme-color" content="#05070a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070a'/%3E%3Crect x='9' y='14' width='14' height='12' fill='%23dfe7e0'/%3E%3Cpath d='M6 14 16 8l10 6Z' fill='%23dfe7e0'/%3E%3Crect x='14' y='19' width='4' height='7' fill='%23e0231c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/kage/fonts.css">
+<style>
+  :root{
+    --ink:#05070a; --ink-2:#080d10; --bone:#dfe7e0; --muted:#8b9a94;
+    --line:rgba(223,231,224,.14); --vermilion:#e0231c; --brass:#e9b48a;
+    --ease:cubic-bezier(.22,.61,.36,1);
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; min-height:100%; }
+  body{
+    background:
+      radial-gradient(120% 80% at 50% -10%, rgba(32,52,60,.34), transparent 62%),
+      radial-gradient(80% 60% at 92% 8%, rgba(224,35,28,.08), transparent 60%),
+      var(--ink);
+    color:var(--bone);
+    font-family:'Onest',system-ui,-apple-system,sans-serif;
+    font-size:15px; line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  body::after{
+    content:''; position:fixed; inset:0; pointer-events:none; z-index:1; opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  a{ color:inherit; }
+  .wrap{ width:min(1120px,100% - 40px); margin:0 auto; position:relative; z-index:2; }
+  header.bar{
+    position:sticky; top:0; z-index:5;
+    background:linear-gradient(180deg, rgba(5,7,10,.94), rgba(5,7,10,.72));
+    backdrop-filter:blur(10px); border-bottom:1px solid var(--line);
+  }
+  .bar-in{ display:flex; align-items:center; gap:16px; height:68px; }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .brand svg{ width:30px; height:30px; display:block; }
+  .brand b{ font-size:11px; font-weight:500; letter-spacing:.26em; }
+  .brand i{ display:block; font-style:normal; font-size:8px; letter-spacing:.32em; color:var(--muted); margin-top:3px; }
+  .tag{
+    font-size:9px; letter-spacing:.28em; text-transform:uppercase; color:var(--brass);
+    border:1px solid rgba(233,180,138,.4); padding:4px 8px; border-radius:2px; margin-left:4px;
+  }
+  .bar-right{ margin-left:auto; display:flex; align-items:center; gap:10px; }
+  .btn{
+    appearance:none; border:1px solid var(--line); background:transparent; color:var(--bone);
+    font:inherit; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+    padding:10px 14px; border-radius:2px; cursor:pointer;
+    transition:border-color .35s var(--ease), background .35s var(--ease), opacity .3s;
+  }
+  .btn:hover{ border-color:rgba(223,231,224,.5); background:rgba(223,231,224,.05); }
+  .btn[disabled]{ opacity:.45; cursor:default; }
+  .btn.red{ border-color:rgba(224,35,28,.5); color:#ffb6a2; }
+  .btn.red:hover{ background:rgba(224,35,28,.12); border-color:var(--vermilion); }
+  main{ padding:clamp(36px,7vh,86px) 0 80px; }
+
+  .eyebrow{ font-size:10px; letter-spacing:.26em; text-transform:uppercase; color:var(--muted); }
+  h1{ font-size:clamp(34px,6vw,70px); line-height:.96; font-weight:400; letter-spacing:-.02em; margin:14px 0 0; }
+  .sub{ max-width:52ch; color:#a9b6b0; margin:18px 0 0; font-size:14.5px; }
+
+  .gate{
+    margin-top:clamp(26px,5vh,54px); border:1px solid var(--line); border-radius:2px;
+    padding:clamp(24px,4vw,44px); display:grid; gap:26px;
+    background:linear-gradient(180deg, rgba(255,255,255,.025), transparent);
+  }
+  .gate h2{ margin:0; font-size:20px; font-weight:400; letter-spacing:.01em; }
+  .gate p{ margin:8px 0 0; color:var(--muted); max-width:56ch; font-size:14px; }
+  .gate .row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .who{ display:flex; align-items:center; gap:12px; padding:10px 14px; border:1px solid var(--line); border-radius:2px; }
+  .who img{ width:34px; height:34px; border-radius:50%; background:#141c20; object-fit:cover; }
+  .who b{ font-weight:500; font-size:13px; display:block; }
+  .who span{ font-size:11px; color:var(--muted); }
+  .msg{ font-size:12.5px; color:#c9a38f; border-left:2px solid var(--vermilion); padding:2px 0 2px 12px; }
+
+  .stats{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:clamp(26px,5vh,46px); }
+  .stat{ background:var(--ink-2); padding:22px 20px 24px; }
+  .stat span{ display:block; font-size:9px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); }
+  .stat b{ display:block; font-size:clamp(26px,3.4vw,40px); font-weight:400; letter-spacing:-.02em; margin-top:10px; font-variant-numeric:tabular-nums; }
+  .stat i{ display:block; font-style:normal; font-size:11px; color:#7f8d87; margin-top:4px; }
+
+  .toolbar{ display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin:34px 0 14px; }
+  .toolbar h2{ font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--muted); font-weight:500; margin:0 auto 0 0; }
+  .table-wrap{ border:1px solid var(--line); overflow:auto; background:rgba(8,13,16,.65); }
+  table{ width:100%; border-collapse:collapse; min-width:680px; }
+  th,td{ text-align:left; padding:13px 16px; border-bottom:1px solid rgba(223,231,224,.08); vertical-align:middle; }
+  th{ font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted); font-weight:500; background:rgba(255,255,255,.02); position:sticky; top:0; }
+  tr:last-child td{ border-bottom:0; }
+  tr.me td{ background:rgba(224,35,28,.05); }
+  .u{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .u img{ width:30px; height:30px; border-radius:50%; background:#141c20; object-fit:cover; flex:0 0 auto; }
+  .u b{ font-weight:500; font-size:13.5px; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:230px; }
+  .u span{ font-size:11px; color:var(--muted); }
+  td.mail{ font-size:12.5px; color:#c3cec8; }
+  td.num{ font-variant-numeric:tabular-nums; font-size:12px; color:#a9b6b0; white-space:nowrap; }
+  .pill{ display:inline-flex; align-items:center; gap:6px; font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border:1px solid var(--line); border-radius:99px; color:#9fb0a8; }
+  .pill.ok{ color:#8fd0a6; border-color:rgba(143,208,166,.32); }
+  .pill.warn{ color:#e0a08a; border-color:rgba(224,160,138,.32); }
+  .empty{ padding:46px 20px; text-align:center; color:var(--muted); font-size:13px; }
+  .foot{ margin-top:22px; font-size:11.5px; color:#6f7d77; display:flex; flex-wrap:wrap; gap:10px 24px; justify-content:space-between; }
+  .spin{ display:inline-block; width:13px; height:13px; border:1.5px solid rgba(223,231,224,.25); border-top-color:var(--bone); border-radius:50%; animation:sp .8s linear infinite; vertical-align:-2px; }
+  @keyframes sp{ to{ transform:rotate(360deg) } }
+  [hidden]{ display:none !important; }
+  @media (max-width:860px){
+    .stats{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .brand-tx{ display:none; }
+    .bar-in{ height:60px; }
+  }
+  @media (max-width:560px){
+    .wrap{ width:calc(100% - 28px); }
+    .tag{ display:none; }
+    th:nth-child(4), td:nth-child(4){ display:none; }
+  }
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap bar-in">
+    <a class="brand" href="/" aria-label="Ayush Danthta — home">
+      <svg viewBox="0 0 44 44" fill="none" aria-hidden="true">
+        <path d="M22 4.5v6.4M19.8 5.9v4.2M24.2 5.9v4.2" stroke="#dfe7e0" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="22" cy="11.2" r="1" fill="#dfe7e0"/>
+        <path d="M11.4 12.4h21.2l4.6 5.4H6.8Z" fill="#dfe7e0"/>
+        <rect x="11.2" y="17.8" width="21.6" height="12" fill="#dfe7e0" fill-opacity=".32"/>
+        <rect x="10" y="18.2" width="2.6" height="11.6" fill="#dfe7e0"/>
+        <rect x="31.4" y="18.2" width="2.6" height="11.6" fill="#dfe7e0"/>
+        <rect x="19.2" y="23" width="5.6" height="6.8" fill="#e0231c"/>
+        <rect x="6.6" y="30.5" width="30.8" height="3" fill="#dfe7e0" fill-opacity=".78"/>
+      </svg>
+      <span class="brand-tx"><b>AYUSH DANTHTA</b><i>DESIGNER · DEVELOPER · MOTION</i></span>
+    </a>
+    <span class="tag">Admin</span>
+    <div class="bar-right">
+      <a class="btn" href="/" style="text-decoration:none">View site</a>
+      <button class="btn" id="signOut" type="button" hidden>Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Chapter 06 — The Register</p>
+    <h1>Accounts</h1>
+    <p class="sub">Everyone who has signed in to the portfolio, read straight from Clerk. This page is
+      served by <code>api/admin.mjs</code>, which verifies the session token and the address before it
+      returns a single row.</p>
+
+    <section class="gate" id="gate">
+      <div>
+        <h2 id="gateTitle">Sign in to continue</h2>
+        <p id="gateCopy">This register is restricted to <b>ayushdanthta@gmail.com</b>. Sign in with that
+          address and the account list will load here.</p>
+      </div>
+      <div class="row">
+        <button class="btn red" id="signIn" type="button">Sign in with Clerk</button>
+        <span class="spin" id="gateSpin" hidden></span>
+        <span class="msg" id="gateMsg" hidden></span>
+      </div>
+      <div class="who" id="who" hidden>
+        <img id="whoImg" alt="" width="34" height="34">
+        <div><b id="whoName"></b><span id="whoMail"></span></div>
+      </div>
+    </section>
+
+    <section id="panel" hidden>
+      <div class="stats" id="stats">
+        <div class="stat"><span>Accounts</span><b id="sTotal">—</b><i>all time</i></div>
+        <div class="stat"><span>New</span><b id="sWeek">—</b><i>last seven days</i></div>
+        <div class="stat"><span>Sessions</span><b id="sActive">—</b><i>active now</i></div>
+        <div class="stat"><span>Verified</span><b id="sVerified">—</b><i>email confirmed</i></div>
+      </div>
+
+      <div class="toolbar">
+        <h2>People <span id="count" style="color:#5f6d67; letter-spacing:.12em"></span></h2>
+        <button class="btn" id="refresh" type="button">Refresh</button>
+        <button class="btn" id="export" type="button">Export CSV</button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Person</th><th>Email</th><th>Joined</th><th>Last sign-in</th><th>State</th></tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden>No accounts yet. The first sign-up will appear here.</div>
+      </div>
+      <div class="foot">
+        <span id="stamp">—</span>
+        <span>Protected by Clerk · session verified server-side</span>
+      </div>
+    </section>
+
+    <section class="gate" id="blocked" hidden>
+      <div>
+        <h2>Not your register</h2>
+        <p>You are signed in, but this page only opens for <b>ayushdanthta@gmail.com</b>. Sign in with
+          that address, or return to the site.</p>
+      </div>
+      <div class="row"><button class="btn" id="switch" type="button">Use another account</button></div>
+    </section>
+
+    <section class="gate" id="failure" hidden>
+      <div>
+        <h2 id="failTitle">The register could not load</h2>
+        <p class="msg" id="failMsg"></p>
+      </div>
+      <div class="row"><button class="btn" id="retry" type="button">Try again</button></div>
+    </section>
+  </div>
+</main>
+
+<script src="assets/kage/clerk-key.js" defer></script>
+<script src="assets/kage/clerk-boot.js" defer></script>
+<script>
+(function () {
+  /* This script is inline and runs while the document is still parsing, so the
+     deferred Clerk files have not executed yet. Read them when the page is
+     ready instead of at parse time. */
+  var A = null;
+  var $ = function (id) { return document.getElementById(id); };
+  var els = {
+    gate: $('gate'), gateTitle: $('gateTitle'), gateCopy: $('gateCopy'), gateMsg: $('gateMsg'),
+    gateSpin: $('gateSpin'), signIn: $('signIn'), who: $('who'), whoImg: $('whoImg'),
+    whoName: $('whoName'), whoMail: $('whoMail'), panel: $('panel'), blocked: $('blocked'),
+    failure: $('failure'), failTitle: $('failTitle'), failMsg: $('failMsg'), rows: $('rows'),
+    empty: $('empty'), refresh: $('refresh'), export: $('export'), signOut: $('signOut'),
+    stamp: $('stamp'), count: $('count'), switch: $('switch'), retry: $('retry')
+  };
+  var clerk = null, data = null, adminUser = null;
+
+  var fmt = new Intl.DateTimeFormat(undefined, { day: '2-digit', month: 'short', year: 'numeric' });
+  var fmtShort = new Intl.DateTimeFormat(undefined, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+  function when(sec) {
+    if (!sec) return '—';
+    return fmt.format(new Date(sec * 1000));
+  }
+  function whenShort(sec) {
+    if (!sec) return 'never';
+    return fmtShort.format(new Date(sec * 1000));
+  }
+
+  function setMsg(text) {
+    els.gateMsg.hidden = !text;
+    els.gateMsg.textContent = text || '';
+  }
+  function show(which) {
+    [els.gate, els.panel, els.blocked, els.failure].forEach(function (s) { s.hidden = s !== which; });
+  }
+  function failure(title, msg) {
+    els.failTitle.textContent = title;
+    els.failMsg.textContent = msg;
+    show(els.failure);
+  }
+
+  function identity(user) {
+    if (!user) return;
+    var email = user.primaryEmailAddress ? user.primaryEmailAddress.emailAddress : '';
+    els.who.hidden = false;
+    els.whoName.textContent = A.displayName(user);
+    els.whoMail.textContent = email;
+    if (user.imageUrl) els.whoImg.src = user.imageUrl;
+    els.signOut.hidden = false;
+  }
+
+  function row(u) {
+    var tr = document.createElement('tr');
+    if (adminUser && u.email && u.email.toLowerCase() === A.ADMIN_EMAIL) tr.className = 'me';
+
+    var td = document.createElement('td');
+    var wrap = document.createElement('div'); wrap.className = 'u';
+    if (u.avatar) {
+      var img = document.createElement('img'); img.src = u.avatar; img.alt = ''; img.loading = 'lazy'; img.width = 30; img.height = 30;
+      wrap.appendChild(img);
+    }
+    var box = document.createElement('div');
+    var b = document.createElement('b'); b.textContent = u.name || 'Unnamed';
+    var s = document.createElement('span'); s.textContent = u.id;
+    box.appendChild(b); box.appendChild(s); wrap.appendChild(box); td.appendChild(wrap);
+    tr.appendChild(td);
+
+    var mail = document.createElement('td'); mail.className = 'mail'; mail.textContent = u.email || '—';
+    tr.appendChild(mail);
+
+    var joined = document.createElement('td'); joined.className = 'num'; joined.textContent = when(u.created);
+    tr.appendChild(joined);
+
+    var seen = document.createElement('td'); seen.className = 'num'; seen.textContent = whenShort(u.lastSeen);
+    tr.appendChild(seen);
+
+    var state = document.createElement('td');
+    var pill = document.createElement('span');
+    if (u.banned) { pill.className = 'pill warn'; pill.textContent = 'Banned'; }
+    else if (u.verified) { pill.className = 'pill ok'; pill.textContent = 'Verified'; }
+    else { pill.className = 'pill'; pill.textContent = 'Unverified'; }
+    state.appendChild(pill);
+    tr.appendChild(state);
+    return tr;
+  }
+
+  function render(d) {
+    data = d;
+    $('sTotal').textContent = d.stats.total;
+    $('sWeek').textContent = d.stats.newThisWeek;
+    $('sActive').textContent = d.stats.active;
+    $('sVerified').textContent = d.stats.verified;
+    els.count.textContent = '· ' + d.users.length + ' shown';
+    els.rows.textContent = '';
+    d.users.forEach(function (u) { els.rows.appendChild(row(u)); });
+    els.empty.hidden = d.users.length > 0;
+    els.stamp.textContent = 'Read ' + new Intl.DateTimeFormat(undefined, {
+      dateStyle: 'medium', timeStyle: 'short'
+    }).format(new Date(d.fetchedAt));
+    show(els.panel);
+  }
+
+  async function load() {
+    els.refresh.disabled = true;
+    try {
+      var token = await A.token();
+      if (!token) throw new Error('no session');
+      var res = await fetch('api/admin', {
+        headers: { Authorization: 'Bearer ' + token },
+        cache: 'no-store'
+      });
+      var body = await res.json().catch(function () { return {}; });
+      if (res.status === 401) throw new Error('Your session expired. Sign in again.');
+      if (res.status === 403) { show(els.blocked); return; }
+      if (res.status === 503) {
+        failure('One environment variable is missing', body.message || 'Set CLERK_SECRET_KEY in Vercel and redeploy.');
+        return;
+      }
+      if (!res.ok) throw new Error(body.error === 'clerk_unreachable' ? 'Clerk’s API did not answer. Try again in a moment.' : 'Unexpected response (' + res.status + ')');
+      render(body);
+    } catch (err) {
+      failure('The register could not load', err && err.message ? err.message : 'Unknown error.');
+    } finally {
+      els.refresh.disabled = false;
+    }
+  }
+
+  async function gate() {
+    A = window.HimachalAuth;
+    if (!A) return failure('Clerk is not configured', 'assets/kage/clerk-boot.js did not load.');
+    try {
+      clerk = await A.loadClerk();
+    } catch (err) {
+      failure('Clerk could not start', 'The SDK did not load. Check the network and the publishable key.');
+      return;
+    }
+    clerk.addListener(function (state) { sync(state.user); });
+    sync(clerk.user);
+  }
+
+  function sync(user) {
+    adminUser = user && A.isAdmin(user) ? user : null;
+    if (!user) {
+      els.who.hidden = true;
+      els.signOut.hidden = true;
+      setMsg('');
+      show(els.gate);
+      return;
+    }
+    identity(user);
+    if (adminUser) { setMsg(''); load(); }
+    else show(els.blocked);
+  }
+
+  els.signIn.addEventListener('click', function () {
+    A = A || window.HimachalAuth;
+    if (!A) return setMsg('Clerk is still loading — try again in a moment.');
+    setMsg('');
+    els.signIn.disabled = true;
+    els.gateSpin.hidden = false;
+    A.loadClerk().then(function (c) {
+      clerk = c;
+      c.openSignIn({ appearance: A.appearance });
+    }).catch(function () {
+      setMsg('Sign-in could not start.');
+    }).finally(function () {
+      els.signIn.disabled = false;
+      els.gateSpin.hidden = true;
+    });
+  });
+
+  els.switch.addEventListener('click', function () {
+    if (!clerk) return;
+    clerk.signOut().then(function () {
+      clerk.openSignIn({ appearance: A.appearance });
+    });
+  });
+
+  els.signOut.addEventListener('click', function () {
+    if (clerk) clerk.signOut().then(function () { location.reload(); });
+  });
+
+  els.refresh.addEventListener('click', load);
+  els.retry.addEventListener('click', function () {
+    if (adminUser) load(); else gate();
+  });
+
+  els.export.addEventListener('click', function () {
+    if (!data) return;
+    var esc = function (v) {
+      var s = String(v == null ? '' : v);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    var lines = [['name', 'email', 'clerk_id', 'joined', 'last_sign_in', 'verified', 'banned'].join(',')];
+    data.users.forEach(function (u) {
+      lines.push([u.name, u.email, u.id, when(u.created), whenShort(u.lastSeen), u.verified, u.banned].map(esc).join(','));
+    });
+    var blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'accounts-' + new Date().toISOString().slice(0, 10) + '.csv';
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  });
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', gate);
+  else gate();
+})();
+</script>
+</body>
+</html>

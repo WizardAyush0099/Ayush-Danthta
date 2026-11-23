@@ -1,68 +1,63 @@
 WZ STUDIO — IMAGE ASSETS
 ========================
 
+The site is one generated page (index.html) with its scene, shaders and CSS
+inline. There is no assets/js or assets/css runtime in the shipped page; the
+3-D engine is assets/kage/three.min.js.
+
 PORTRAIT
 --------
-The hero and the about section are built for a cut-out portrait of Ayush.
+    assets/img/portrait-source.png   original studio photograph (white paper)
+    assets/img/portrait-cutout.webp      up to 1400px tall
+    assets/img/portrait-cutout@800.webp  800px tall
 
-1. Save the original photograph (white background) as:
+Regenerate both cut-outs with:
 
-       assets/img/portrait-source.png
+    python3 tools/prepare_portrait.py
 
-2. Run the background remover from the project root:
+It floods the white field from the border (so white clothing and highlights
+inside the subject survive), removes the white halo the flood fill leaves around
+hair, un-composites white from the soft edge, trims to the subject and writes
+both sizes. Options: --tolerance 26, --erode 3, --feather 0.9, --height 1400.
+Requires Pillow and numpy.
 
-       python3 tools/prepare_portrait.py
+The page uses a srcset of both files; keep their dimensions in step with the
+width/height attributes in tools/theme_kage.py if you replace them.
 
-   It floods the white field from the border (so white clothing and highlights
-   inside the subject survive), feathers the edge, removes the white fringe,
-   trims to the subject and writes:
+FOREGROUND CUT-OUTS
+-------------------
+    assets/kage/fg/hill.webp           slate ridge, drawn from assets/img/hp/ridge.webp
+    assets/kage/fg/tall-grass.webp     Himalayan grass and bracken
+    assets/kage/fg/deodar-tree.webp    one mature deodar
+    assets/kage/fg/deodar-spray.webp   the 3-D spray texture
+    assets/kage/fg/deodar-grove.webp   the forest band
+    assets/kage/fg/hp-slate-stones.webp
 
-       assets/img/portrait-cutout.webp      up to 1400px tall
-       assets/img/portrait-cutout@800.webp  800px tall
+Regenerate the first two with:
 
-   Options: --tolerance 18 (raise for off-white studio paper), --feather 0.8,
-   --height 1400. Requires Pillow and numpy.
+    python3 tools/make_fg.py
 
-3. Reload the site. `assets/js/app.js` adds `html.has-photo` once the cut-out
-   loads; the monogram plate is replaced automatically. No HTML edits needed.
+Keep the filenames and pixel sizes: the HTML width/height attributes and the
+aspect boxes are built around them.
 
-Until the file exists, the hero shows an art-directed WZ plate and the about
-section shows a monogram plate — never a broken image.
+FIELD PHOTOGRAPHS
+-----------------
+    assets/img/hp/temple.webp   Bhimakali temple, Sarahan
+    assets/img/hp/ridge.webp    the snow line
+    assets/img/hp/forest.webp   deodar forest, Manali
+    assets/img/hp/fir.webp      deodar forest, Manali
+    assets/img/hp/canopy.webp   deodar crown
 
-OTHER IMAGES
-------------
-The project posters and template posters are CSS compositions, not screenshots.
-They stay sharp at every size and add no network weight. Real screenshots can
-replace them later by swapping the `.poster` / `.work-poster` contents for an
-`<img>` while keeping the same aspect ratios.
+Originals live in Hp Img/. The planted woodland in the scene is built from
+assets/kage/fg/deodar-spray.webp, not from these photographs.
 
 VENDOR
 ------
-assets/vendor/three.module.js      three r169 (MIT)
-assets/vendor/gsap.min.js          GSAP 3.12.5 (standard licence)
-assets/vendor/ScrollTrigger.min.js ScrollTrigger 3.12.5
+assets/kage/three.min.js   Three.js r1xx build used by the engine (MIT)
+assets/kage/fonts.css      Onest and the display face
 
-These are vendored so the site works offline and has no third-party runtime
-dependency. The fonts are loaded from Google Fonts with a system fallback.
+The scene has no third-party runtime dependency. Clerk's browser SDK is fetched
+from its CDN only when the account control is used (see assets/kage/clerk-boot.js).
 
-FIELD NOTES — THE SCROLL WORLD
-------------------------------
-assets/js/journey3d.js builds the pinned 3D stretch between the hero and the
-studio section: photographs sit at real depths and a camera dollies through
-them along a spline, keyed to scroll. Styles live in assets/css/journey.css.
-
-  assets/img/hp/temple.webp   Bhimakali temple, Sarahan
-  assets/img/hp/ridge.webp    blurred crop of that frame, used for the far ridge
-  assets/img/hp/forest.webp   deodar forest, Manali
-  assets/img/hp/fir.webp      deodar forest, Manali
-  assets/img/hp/canopy.webp   crop of that frame, used as foreground canopy
-
-Originals live in Hp Img/. The pine-forest stock frame there carries a
-watermark across the whole image, so it is not used anywhere on the site.
-
-Every plate is graded in the fragment shader (desaturate, push shadows into the
-page ink, highlights toward cream) so photographs taken in different light read
-as one place. Swapping a file keeps its path — no JS edits needed.
-
-Reduced motion, `data-motion="off"` and a missing WebGL context all fall back to
-a static composition where every chapter stays readable.
+Reduced motion is respected: the scroll reveal, the portrait lantern tilt and
+the particle systems stand down, and every chapter stays readable.
