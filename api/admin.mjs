@@ -173,14 +173,16 @@ export default async function handler(req, res) {
     const [list, count, active] = await Promise.all([
       clerkGet('/users?limit=100&order_by=-created_at&offset=0'),
       clerkGet('/users/count'),
-      clerkGet('/sessions?status=active&limit=1')
+      clerkGet('/sessions?status=active&limit=100')
     ]);
 
     const users = (Array.isArray(list) ? list : []).map(trimUser).sort((a, b) => (b.created || 0) - (a.created || 0));
     const week = Math.floor(Date.now() / 1000) - 7 * 24 * 60 * 60;
     const total = typeof count.total_count === 'number' ? count.total_count : users.length;
-    const activeCount =
-      typeof active.total_count === 'number' ? active.total_count : Array.isArray(active) ? active.length : 0;
+    /* Clerk's session list has no count endpoint; the list itself is the
+       count. The dashboard says "100+" rather than pretending when it caps. */
+    const activeList = Array.isArray(active) ? active : [];
+    const activeCount = activeList.length;
 
     return send(res, 200, {
       admin: { email: ADMIN_EMAIL },
@@ -188,6 +190,7 @@ export default async function handler(req, res) {
         total,
         newThisWeek: users.filter((u) => (u.created || 0) >= week).length,
         active: activeCount,
+        activeCapped: activeList.length >= 100,
         verified: users.filter((u) => u.verified).length
       },
       users,

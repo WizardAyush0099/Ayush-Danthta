@@ -305,7 +305,7 @@
     data = d;
     $('sTotal').textContent = d.stats.total;
     $('sWeek').textContent = d.stats.newThisWeek;
-    $('sActive').textContent = d.stats.active;
+    $('sActive').textContent = d.stats.activeCapped ? d.stats.active + '+' : d.stats.active;
     $('sVerified').textContent = d.stats.verified;
     els.count.textContent = '· ' + d.users.length + ' shown';
     els.rows.textContent = '';

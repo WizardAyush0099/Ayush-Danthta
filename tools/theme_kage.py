@@ -1807,6 +1807,12 @@ sub("</style>\n</head>", AUTH_CSS + '''
   content:''; position:absolute; z-index:-1; inset:-20px -8% -18px -10%; pointer-events:none;
   background:radial-gradient(120% 105% at 42% 100%, rgba(4,7,10,.74), rgba(4,7,10,.32) 54%, transparent 80%);
 }
+/* The custom dot replaces the pointer, but a keyboard still needs to see where
+   it is. Neither the engine nor Clerk's modal carries a visible focus ring. */
+:where(a, button, [tabindex], input, select, textarea):focus-visible{
+  outline:2px solid #e9b48a; outline-offset:3px; border-radius:1px;
+}
+:where(a, button, [tabindex]):focus:not(:focus-visible){ outline:none; }
 ''' + "</style>\n</head>")
 
 sub('  <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>',
