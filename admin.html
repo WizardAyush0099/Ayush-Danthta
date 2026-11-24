@@ -322,10 +322,18 @@
     try {
       var token = await A.token();
       if (!token) throw new Error('no session');
-      var res = await fetch('api/admin', {
+      var res = await fetch(window.CLERK_ADMIN_API || 'api/admin', {
         headers: { Authorization: 'Bearer ' + token },
         cache: 'no-store'
       });
+      /* GitHub Pages serves files and nothing else, so a static deployment
+         answers this with an HTML 404. Say that plainly instead of showing a
+         JSON parse failure to the one person who can fix it. */
+      var type = res.headers.get('content-type') || '';
+      if (res.status === 404 || type.indexOf('json') === -1) {
+        failure('The register needs the server function', 'This deployment only serves files, so api/admin does not exist here. Open the Vercel deployment of this repository, or set window.CLERK_ADMIN_API to one before this script.');
+        return;
+      }
       var body = await res.json().catch(function () { return {}; });
       if (res.status === 401) throw new Error('Your session expired. Sign in again.');
       if (res.status === 403) { show(els.blocked); return; }

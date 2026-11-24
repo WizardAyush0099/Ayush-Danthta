@@ -78,8 +78,15 @@ behaves like a lantern crossing the photograph.
 ## Accounts and the admin register
 
 The nav carries Clerk's account control (`Sign in`, then the avatar). It is
-loaded lazily from Clerk's CDN by `assets/kage/clerk-boot.js` after the scene has
-started, so nothing third-party delays the first paint.
+loaded lazily from the instance's own frontend API host by
+`assets/kage/clerk-boot.js` after the scene has started, so nothing third-party
+delays the first paint.
+
+The loader asks for ClerkJS `@6` plus the Core 3 UI bundle (`@clerk/ui@1`) and
+hands the UI to `Clerk.load()`. That is not cosmetic: instances created after
+November 2026 refuse ClerkJS older than 6.40 and answer "This app uses an
+outdated version of Clerk", and since Core 3 the prebuilt UI is a separate
+package that `openSignIn()` needs.
 
 - `assets/kage/clerk-key.js` holds the **publishable** key. That key is public by
   design (the same value as `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`).
@@ -105,7 +112,11 @@ To change who may open the register, edit `ADMIN_EMAIL` in `api/admin.mjs` and
 remove the `href` — but the API check is the real gate, not the link.
 
 The site deploys as a static project with one Vercel Node function: no build
-command, no framework preset required.
+command, no framework preset required. On a files-only host such as GitHub Pages
+the portfolio and sign-in work, but `api/admin` does not exist, so the register
+says so and stays empty. Open the Vercel deployment for the register, or point
+the page at one with `window.CLERK_ADMIN_API = 'https://your-app.vercel.app/api/admin'`
+loaded before `admin.html`'s module script.
 
 ## Checks used
 
